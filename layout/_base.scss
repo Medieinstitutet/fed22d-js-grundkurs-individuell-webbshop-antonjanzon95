@@ -1,0 +1,26 @@
+h1,h2,h3,h4,h5,h6 {
+    margin: 0;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0px;
+    background-color: rgb(148, 148, 238);
+
+    button {
+        height: 50px;
+    }
+}
+
+.wrapper {
+    padding: 10px;
+}
+
+article {
+    margin: 0 auto;
+    max-width: 90vw;
+    height: 200px;
+}
