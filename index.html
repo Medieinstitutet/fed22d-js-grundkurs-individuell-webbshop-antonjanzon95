@@ -13,11 +13,17 @@
     <header>
         <h1>Gottfrids Munkar</h1>
         <button>Varukorg</button>
-        <p id="totalPriceAll">Totalt pris allt</p>
+        <p id="totalPriceAll"></p>
     </header>
 
     <main class="wrapper">
         <h2>Munksortiment</h2>
+        <p>Sortera efter:</p>
+        <select name="Sort by" id="sortBy">
+            <option value="Name">Namn</option>
+            <option value="Price">Pris stigande</option>
+            <option value="Price">Pris fallande</option>
+        </select>
         <article>
             <h3>Jordgubb - 15kr</h3>
             <figure>
