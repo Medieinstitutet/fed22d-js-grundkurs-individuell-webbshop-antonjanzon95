@@ -23,4 +23,14 @@ article {
     margin: 0 auto;
     max-width: 90vw;
     height: 200px;
+    border: 5px solid red;
+
+    button {
+        border: none;
+        width: 3rem;
+        height: 3rem;
+        background: black;
+        color: white;
+        font-size: 2rem;
+    }
 }

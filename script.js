@@ -27,10 +27,10 @@ for (let i = 0; i < buttonRemove.length; i++) {
     buttonRemove[i].addEventListener('click', function() {
         if (donutAmount[i].value > 0) {
             donutAmount[i].value = Number(donutAmount[i].value) - 1;
+            donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
+            totalAll -= Number(donutPrice[i].textContent);
+            totalPrice.textContent = `Totalt: ${Number(totalAll)}kr`;
         }
-        donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
-        totalAll -= Number(donutPrice[i].textContent);
-        totalPrice.textContent = `Totalt: ${Number(totalAll)}kr`;
     })
 }
 
