@@ -9,24 +9,28 @@ const rows = document.querySelectorAll(".row");
 
 
 totalPrice.textContent = `Totalt: 0kr`;
+let totalAll = 0;
 
-
-//add donut 
+//add donut & calculate total price
 for (let i = 0; i < buttonAdd.length; i++) {
     buttonAdd[i].addEventListener('click', function() {
         donutAmount[i].value = Number(donutAmount[i].value) + 1;
         donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
+        totalAll += Number(donutPrice[i].textContent);
+        totalPrice.textContent = `Totalt: ${Number(totalAll)}kr`;
     })
 }
 
 
-//remove donut 
+//remove donut & calculate total price
 for (let i = 0; i < buttonRemove.length; i++) {
     buttonRemove[i].addEventListener('click', function() {
         if (donutAmount[i].value > 0) {
             donutAmount[i].value = Number(donutAmount[i].value) - 1;
         }
         donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
+        totalAll -= Number(donutPrice[i].textContent);
+        totalPrice.textContent = `Totalt: ${Number(totalAll)}kr`;
     })
 }
 
