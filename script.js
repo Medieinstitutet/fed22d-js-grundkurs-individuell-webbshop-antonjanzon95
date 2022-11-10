@@ -1,35 +1,41 @@
-const buttonAdd = document.querySelector("#add");
-const buttonRemove = document.querySelector("#remove");
-let donutAmount = document.querySelector("#donutCurrentAmount");
-let donutPrice = document.querySelector("#donutCurrentPrice");
-let totalPrice = document.querySelector("#totalPriceAll")
-const rows = document.querySelectorAll(".row")
+const buttonAdd = document.querySelectorAll(".add");
+const buttonRemove = document.querySelectorAll(".remove");
+let donutAmount = document.querySelectorAll(".donutCurrentAmount");
+let donutCurrentPrice = document.querySelectorAll(".donutCurrentPrice");
+let totalPrice = document.querySelector("#totalPriceAll");
+let donutPrice = document.querySelectorAll(".donutPrice");
+const rows = document.querySelectorAll(".row");
 
 
 
-totalPrice.textContent = 'Totalt: 0kr';
+totalPrice.textContent = `Totalt: 0kr`;
 
 
-let strawberryPrice = 15;
+//add donut 
+for (let i = 0; i < buttonAdd.length; i++) {
+    buttonAdd[i].addEventListener('click', function() {
+        donutAmount[i].value = Number(donutAmount[i].value) + 1;
+        donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
+    })
+}
 
 
-//add donut & calculate total
-buttonAdd.addEventListener('click', function() {
-    donutAmount.value = Number(donutAmount.value) + 1;
-    donutPrice.value = Number(donutPrice.value) + strawberryPrice;
-    totalPrice.textContent = `Totalt: ${donutPrice.value}kr`;
-});
+//remove donut 
+for (let i = 0; i < buttonRemove.length; i++) {
+    buttonRemove[i].addEventListener('click', function() {
+        if (donutAmount[i].value > 0) {
+            donutAmount[i].value = Number(donutAmount[i].value) - 1;
+        }
+        donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
+    })
+}
 
-//remove donut & calculate total
-buttonRemove.addEventListener('click', function() {
-    if (donutAmount.value > 0) {
-        donutAmount.value = Number(donutAmount.value) - 1;
-        //Detta bör appendas till en array där man kan räkna ut totalen för alla munkar ifrån?
-        donutPrice.value = Number(donutPrice.value) - strawberryPrice;
-        totalPrice.textContent = `Totalt: ${donutPrice.value}kr`;
-    }
-});
 
+//Uppdatera totalen
+// totalPrice.textContent = `Totalt: ${/*Här ska det vara en sammanställning av alla munkars priser adderade*/}kr`;
+
+
+/*
 //Test
 class Donut {
     constructor(name, price) {
@@ -47,10 +53,10 @@ allDonuts = [strawberryDonut, vanillaDonut, chocolateDonut];
 
 
 for(let i = 0; i < allDonuts.length; i++) {
-    rows[i].donutPrice = allDonuts[i].price;
-    console.log(donutPrice);
+    rows[i].donutCurrentPrice = allDonuts[i].price;
+    console.log(donutCurrentPrice);
 }
-
+*/
 
 /* Sort
 - Få select värdet
