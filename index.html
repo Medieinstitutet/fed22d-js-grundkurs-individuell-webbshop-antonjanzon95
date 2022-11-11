@@ -53,8 +53,8 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
@@ -64,8 +64,8 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
@@ -75,8 +75,8 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
@@ -86,8 +86,8 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
@@ -97,8 +97,8 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
@@ -108,8 +108,8 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
@@ -119,8 +119,8 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
@@ -130,15 +130,62 @@
             <figure>
                 <img src="" alt="">
             </figure>
-            <button class="remove"aria-label="Ta bort en munk">-</button>
-            <button class="add"aria-label="Lägg till en munk">+</button>
+            <button class="remove" aria-label="Ta bort en munk">-</button>
+            <button class="add" aria-label="Lägg till en munk">+</button>
             <input type="number" value="0" class="donutCurrentAmount">
             <input type="number" value="0" class="donutCurrentPrice">
         </article>
 
     </main>
 
-    <aside>Formulär</aside>
+    <aside>
+
+        <form action="">
+            <label for="firstName"></label>
+            <input type="text" id="firstName" placeholder="Förnamn">
+
+            <label for="lastName"></label>
+            <input type="text" id="lastName" placeholder="Efternamn">
+
+            <label for="adress"></label>
+            <input type="text" id="adress" placeholder="Adress (gata)">
+            
+            <label for="zipcode"></label>
+            <input type="number" id="zipcode" placeholder="Postnummer">
+
+            <label for="location"></label>
+            <input type="text" id="location" placeholder="Postort">
+
+            <label for="portCode"></label>
+            <input type="number" id="portCode" placeholder="Ev. portkod">
+
+            <label for="phoneNumber"></label>
+            <input type="number" id="phoneNumber" placeholder="Telefon (mobil)">
+
+            <label for="email"></label>
+            <input type="text" id="email" placeholder="E-postadress"><br>
+        
+            <label for="discountCode">Har du en rabattkod?</label><br>
+            <input type="text" id="discountCode" placeholder="Rabattkod">
+
+            <p>Välj betalsätt:</p>
+            <input type="radio" id="debitCard" name="paymentOption" value="debitCard">
+            <label for="debitCard">Kort</label><br>
+            <input type="radio" id="invoice" name="paymentOption" value="invoice">
+            <label for="invoice">Faktura</label><br>
+
+            <input type="checkbox" id="consentPersonalInfo" value="consentPersonalInfo">
+            <label for="consentPersonalInfo">Godkännande av behandling av personuppgifter</label><br>
+            <input type="checkbox" id="subscribeNewsletter" value="subscribeNewsletter" checked>
+            <label for="subscribeNewsletter">Prenumerera på vårt nyhetsbrev</label><br>
+
+            <button id="orderButton" aria-label="Confirm order" disabled>Beställ nu</button>
+
+            <button id="clearOrder" aria-label="Clear order">Rensa beställning</button>
+
+        </form>
+
+    </aside>
 
 
     <script src="script.js"></script>
