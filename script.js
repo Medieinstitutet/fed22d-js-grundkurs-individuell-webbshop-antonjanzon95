@@ -1,71 +1,61 @@
 const buttonAdd = document.querySelectorAll(".add");
 const buttonRemove = document.querySelectorAll(".remove");
-let donutAmount = document.querySelectorAll(".donutCurrentAmount");
-let donutCurrentPrice = document.querySelectorAll(".donutCurrentPrice");
-let totalPrice = document.querySelector("#totalPriceAll");
-let donutPrice = document.querySelectorAll(".donutPrice");
-const rows = document.querySelectorAll(".row");
 
 
+//increase donut amount by 1
+function increaseDonutAmount(e) {
+    const amountEl = e.currentTarget.parentElement.querySelector(".donutAmount");
 
-totalPrice.textContent = `Totalt: 0kr`;
-let totalAll = 0;
+    let amount = Number(amountEl.textContent);
 
-//add donut & calculate total price
-for (let i = 0; i < buttonAdd.length; i++) {
-    buttonAdd[i].addEventListener('click', function() {
-        donutAmount[i].value = Number(donutAmount[i].value) + 1;
-        donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
-        totalAll += Number(donutPrice[i].textContent);
-        totalPrice.textContent = `Totalt: ${Number(totalAll)}kr`;
-    })
+    amountEl.textContent = amount + 1;
+
+    updateSumCurrent(e.currentTarget.parentElement);
+    updateSumAll(e.currentTarget.parentElement);
 }
 
+//decrease donut amount by 1
+function decreaseDonutAmount(e) {
+    const amountEl = e.currentTarget.parentElement.querySelector(".donutAmount");
 
-//remove donut & calculate total price
-for (let i = 0; i < buttonRemove.length; i++) {
-    buttonRemove[i].addEventListener('click', function() {
-        if (donutAmount[i].value > 0) {
-            donutAmount[i].value = Number(donutAmount[i].value) - 1;
-            donutCurrentPrice[i].value = Number(donutPrice[i].textContent) * Number(donutAmount[i].value);
-            totalAll -= Number(donutPrice[i].textContent);
-            totalPrice.textContent = `Totalt: ${Number(totalAll)}kr`;
-        }
-    })
-}
+    let amount = Number(amountEl.textContent);
 
-
-//Uppdatera totalen
-// totalPrice.textContent = `Totalt: ${/*Här ska det vara en sammanställning av alla munkars priser adderade*/}kr`;
-
-
-/*
-//Test
-class Donut {
-    constructor(name, price) {
-        this.name = name;
-        this.price = price;
+    if(amount < 1) {
+        return;
     }
+
+    amountEl.textContent = amount - 1;
+
+    updateSumCurrent(e.currentTarget.parentElement);
+    updateSumAll(e.currentTarget.parentElement);
 }
 
-let strawberryDonut = new Donut("Jordgubb", 15);
-let vanillaDonut = new Donut("Vanilj", 10);
-let chocolateDonut = new Donut("Choklad", 15);
+//calculate sum of current donut
+function updateSumCurrent (e) {
+    const donutPrice = e.querySelector(".donutPrice").textContent;
+    const donutAmount = e.querySelector(".donutAmount").textContent;
 
+    const sum = donutAmount * donutPrice;
 
-allDonuts = [strawberryDonut, vanillaDonut, chocolateDonut];
-
-
-for(let i = 0; i < allDonuts.length; i++) {
-    rows[i].donutCurrentPrice = allDonuts[i].price;
-    console.log(donutCurrentPrice);
+    e.querySelector(".donutSumPrice").textContent = sum;
 }
-*/
 
-/* Sort
-- Få select värdet
-- Loopa genom array av objekten
-- Sortera med .sort()
-*/
+//calculate sum of all donuts
+function updateSumAll () {
+    const donutRows = document.querySelectorAll(".row");
+    let total = 0;
 
+    for (let i = 0; i < donutRows.length; i++) {
+        const currentDonutTotal = Number(donutRows[i].querySelector(".donutSumPrice").textContent);
+
+        total = total + currentDonutTotal;
+    }
+    document.querySelector("#sumPriceAll").textContent = "Totalt: " + total + "kr."
+}
+
+//add click functions to buttons +/-
+for (let i = 0; i < buttonAdd.length; i++) {
+    buttonAdd[i].addEventListener('click', increaseDonutAmount);
+    buttonRemove[i].addEventListener('click', decreaseDonutAmount);
+}
 

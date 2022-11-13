@@ -13,17 +13,17 @@
     <header>
         <h1>Gottfrids Munkar</h1>
         <button>Varukorg</button>
-        <p id="totalPriceAll"></p>
+        <span id="sumPriceAll"></span>
     </header>
 
     <main class="wrapper">
 
         <h2>Munksortiment</h2>
         <p>Sortera enligt:</p>
-        <select name="Sort by" id="sortBy">
-            <option value="Name">Namn</option>
-            <option value="Price down">Pris stigande</option>
-            <option value="Price up">Pris fallande</option>
+        <select name="sortName" id="sortBy">
+            <option value="name">Namn</option>
+            <option value="priceDesc">Pris stigande</option>
+            <option value="priceAsc">Pris fallande</option>
         </select>
 
         <article class="row">
@@ -33,8 +33,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -44,8 +44,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -55,8 +55,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -66,8 +66,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -77,8 +77,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -88,8 +88,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -99,8 +99,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -110,8 +110,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -121,8 +121,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
         <article class="row">
@@ -132,8 +132,8 @@
             </figure>
             <button class="remove" aria-label="Ta bort en munk">-</button>
             <button class="add" aria-label="Lägg till en munk">+</button>
-            <input type="number" value="0" class="donutCurrentAmount">
-            <input type="number" value="0" class="donutCurrentPrice">
+            <p><span class="donutAmount">0</span> st</p>
+            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
         </article>
 
     </main>
@@ -141,32 +141,50 @@
     <aside>
 
         <form action="">
-            <label for="firstName"></label>
-            <input type="text" id="firstName" placeholder="Förnamn">
+            <label>
+                Förnamn:<br>
+                <input type="text" placeholder="Förnamn">
+            </label><br>
 
-            <label for="lastName"></label>
-            <input type="text" id="lastName" placeholder="Efternamn">
+            <label>
+                Efternamn:<br>
+                <input type="text" placeholder="Efternamn">
+            </label><br>
 
-            <label for="adress"></label>
-            <input type="text" id="adress" placeholder="Adress (gata)">
+            <label>
+                Adress:<br>
+                <input type="text" placeholder="Adress">
+            </label><br>
             
-            <label for="zipcode"></label>
-            <input type="number" id="zipcode" placeholder="Postnummer">
+            <label>
+                Postnummer:<br>
+                <input type="number" placeholder="Postnummer">
+            </label><br>
 
-            <label for="location"></label>
-            <input type="text" id="location" placeholder="Postort">
+            <label>
+                Postort:<br>
+                <input type="text" placeholder="Postort">
+            </label><br>
 
-            <label for="portCode"></label>
-            <input type="number" id="portCode" placeholder="Ev. portkod">
+            <label>
+                Ev. portkod:<br>
+                <input type="number" placeholder="Portkod">
+            </label><br>
 
-            <label for="phoneNumber"></label>
-            <input type="number" id="phoneNumber" placeholder="Telefon (mobil)">
+            <label>
+                Telefonnummer (mobil):<br>
+                <input type="number" placeholder="Telefonnummer">
+            </label><br>
 
-            <label for="email"></label>
-            <input type="text" id="email" placeholder="E-postadress"><br>
+            <label>
+                E-postadress:<br>
+                <input type="text" placeholder="E-postadress">
+            </label><br>
         
-            <label for="discountCode">Har du en rabattkod?</label><br>
-            <input type="text" id="discountCode" placeholder="Rabattkod">
+            <label>
+                Har du en rabattkod?<br>
+                <input type="text" placeholder="Rabattkod">
+            </label><br>
 
             <p>Välj betalsätt:</p>
             <input type="radio" id="debitCard" name="paymentOption" value="debitCard">

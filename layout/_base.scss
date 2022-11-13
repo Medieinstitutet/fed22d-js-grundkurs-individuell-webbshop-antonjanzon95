@@ -34,3 +34,19 @@ article {
         font-size: 2rem;
     }
 }
+
+form {
+    max-width: 90vw;
+    margin: 0 auto;
+
+    label {
+        font-size: 1.5rem;
+
+        input {
+            width: 100%;
+            height: 2rem;
+            border: 3px solid blue;
+            margin-bottom: 1rem;
+        }
+    }
+}
