@@ -1,211 +1,227 @@
 <!DOCTYPE html>
 <html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gottfrids Munkar</title>
 
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Gottfrids Munkar</h1>
-        <button>Varukorg</button>
-        <span id="sumPriceAll"></span>
+      <h1>Gottfrids Munkar</h1>
+      <button>Varukorg</button>
+      <span id="sumPriceAll"></span>
     </header>
 
     <main class="wrapper">
+      <h2>Munksortiment</h2>
+      <p>Sortera enligt:</p>
+      <select name="sortName" id="sortBy">
+        <option value="name">Namn</option>
+        <option value="priceDesc">Pris stigande</option>
+        <option value="priceAsc">Pris fallande</option>
+      </select>
 
-        <h2>Munksortiment</h2>
-        <p>Sortera enligt:</p>
-        <select name="sortName" id="sortBy">
-            <option value="name">Namn</option>
-            <option value="priceDesc">Pris stigande</option>
-            <option value="priceAsc">Pris fallande</option>
-        </select>
+      <article class="row">
+        <h3>Jordgubb - <span class="donutPrice">15</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Jordgubb - <span class="donutPrice">15</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Vanilj - <span class="donutPrice">10</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Vanilj - <span class="donutPrice">10</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Choklad - <span class="donutPrice">15</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Choklad - <span class="donutPrice">15</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Äpple - <span class="donutPrice">12</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Äpple - <span class="donutPrice">12</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Socker - <span class="donutPrice">8</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Socker - <span class="donutPrice">8</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Hallon - <span class="donutPrice">13</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Hallon - <span class="donutPrice">13</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Blåbär - <span class="donutPrice">14</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Blåbär - <span class="donutPrice">14</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Banan - <span class="donutPrice">12</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Banan - <span class="donutPrice">12</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
+      <article class="row">
+        <h3>Oreo - <span class="donutPrice">20</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
 
-        <article class="row">
-            <h3>Oreo - <span class="donutPrice">20</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
-
-        <article class="row">
-            <h3>Lakrits - <span class="donutPrice">5</span>kr</h3>
-            <figure>
-                <img src="" alt="">
-            </figure>
-            <button class="remove" aria-label="Ta bort en munk">-</button>
-            <button class="add" aria-label="Lägg till en munk">+</button>
-            <p><span class="donutAmount">0</span> st</p>
-            <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
-        </article>
-
+      <article class="row">
+        <h3>Lakrits - <span class="donutPrice">5</span>kr</h3>
+        <figure>
+          <img src="" alt="" />
+        </figure>
+        <button class="remove" aria-label="Ta bort en munk">-</button>
+        <button class="add" aria-label="Lägg till en munk">+</button>
+        <p><span class="donutAmount">0</span> st</p>
+        <p>Totalt: <span class="donutSumPrice">0</span> kr</p>
+      </article>
     </main>
 
     <aside>
+      <form action="" id="checkoutForm">
+        <label>
+          Förnamn:<br />
+          <input type="text" placeholder="Förnamn" /> </label
+        ><br />
 
-        <form action="">
-            <label>
-                Förnamn:<br>
-                <input type="text" placeholder="Förnamn">
-            </label><br>
+        <label>
+          Efternamn:<br />
+          <input type="text" placeholder="Efternamn" /> </label
+        ><br />
 
-            <label>
-                Efternamn:<br>
-                <input type="text" placeholder="Efternamn">
-            </label><br>
+        <label>
+          Adress:<br />
+          <input type="text" placeholder="Adress" /> </label
+        ><br />
 
-            <label>
-                Adress:<br>
-                <input type="text" placeholder="Adress">
-            </label><br>
-            
-            <label>
-                Postnummer:<br>
-                <input type="number" placeholder="Postnummer">
-            </label><br>
+        <label>
+          Postnummer:<br />
+          <input type="number" placeholder="Postnummer" /> </label
+        ><br />
 
-            <label>
-                Postort:<br>
-                <input type="text" placeholder="Postort">
-            </label><br>
+        <label>
+          Postort:<br />
+          <input type="text" placeholder="Postort" /> </label
+        ><br />
 
-            <label>
-                Ev. portkod:<br>
-                <input type="number" placeholder="Portkod">
-            </label><br>
+        <label>
+          Ev. portkod:<br />
+          <input type="number" placeholder="Portkod" /> </label
+        ><br />
 
-            <label>
-                Telefonnummer (mobil):<br>
-                <input type="number" placeholder="Telefonnummer">
-            </label><br>
+        <label>
+          Telefonnummer (mobil):<br />
+          <input type="number" placeholder="Telefonnummer" /> </label
+        ><br />
 
-            <label>
-                E-postadress:<br>
-                <input type="text" placeholder="E-postadress">
-            </label><br>
-        
-            <label>
-                Har du en rabattkod?<br>
-                <input type="text" placeholder="Rabattkod">
-            </label><br>
+        <label>
+          E-postadress:<br />
+          <input type="text" placeholder="E-postadress" /> </label
+        ><br />
 
-            <p>Välj betalsätt:</p>
-            <input type="radio" id="debitCard" name="paymentOption" value="debitCard">
-            <label for="debitCard">Kort</label><br>
-            <input type="radio" id="invoice" name="paymentOption" value="invoice">
-            <label for="invoice">Faktura</label><br>
+        <label>
+          Har du en rabattkod?<br />
+          <input type="text" placeholder="Rabattkod" /> </label
+        ><br />
 
-            <input type="checkbox" id="consentPersonalInfo" value="consentPersonalInfo">
-            <label for="consentPersonalInfo">Godkännande av behandling av personuppgifter</label><br>
-            <input type="checkbox" id="subscribeNewsletter" value="subscribeNewsletter" checked>
-            <label for="subscribeNewsletter">Prenumerera på vårt nyhetsbrev</label><br>
+        <p>Välj betalsätt:</p>
+        <input
+          type="radio"
+          id="debitCard"
+          name="paymentOption"
+          value="debitCard"
+        />
+        <label for="debitCard">Kort</label><br />
 
-            <button id="orderButton" aria-label="Confirm order" disabled>Beställ nu</button>
+        <input type="radio" id="invoice" name="paymentOption" value="invoice" />
+        <label for="invoice">Faktura</label><br />
 
-            <button id="clearOrder" aria-label="Clear order">Rensa beställning</button>
+        <input
+          type="checkbox"
+          id="consentPersonalInfo"
+          value="consentPersonalInfo"
+        />
+        <label for="consentPersonalInfo"
+          >Godkännande av behandling av personuppgifter</label
+        ><br />
 
-        </form>
+        <input
+          type="checkbox"
+          id="subscribeNewsletter"
+          value="subscribeNewsletter"
+          checked
+        />
+        <label for="subscribeNewsletter">Prenumerera på vårt nyhetsbrev</label
+        ><br />
 
+        <button id="orderButton" aria-label="Confirm order" disabled>
+          Beställ nu
+        </button>
+
+        <button id="clearForm" aria-label="Clear order">
+          Rensa beställning
+        </button>
+      </form>
     </aside>
 
-
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
