@@ -12,7 +12,6 @@
     <header>
       <h1>Gottfrids Munkar</h1>
       <button>Varukorg</button>
-      <span id="sumPriceAll"></span>
     </header>
 
     <main class="wrapper">
@@ -25,7 +24,7 @@
       </select>
 
       <article class="row">
-        <h3>Jordgubb - <span class="donutPrice">15</span>kr</h3>
+        <h3><span class="donutName">Jordgubb</span> - <span class="donutPrice">15</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -36,7 +35,7 @@
       </article>
 
       <article class="row">
-        <h3>Vanilj - <span class="donutPrice">10</span>kr</h3>
+        <h3><span class="donutName">Vanilj</span> - <span class="donutPrice">10</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -47,7 +46,7 @@
       </article>
 
       <article class="row">
-        <h3>Choklad - <span class="donutPrice">15</span>kr</h3>
+        <h3><span class="donutName">Choklad</span> - <span class="donutPrice">15</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -58,7 +57,7 @@
       </article>
 
       <article class="row">
-        <h3>Äpple - <span class="donutPrice">12</span>kr</h3>
+        <h3><span class="donutName">Äpple</span> - <span class="donutPrice">12</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -69,7 +68,7 @@
       </article>
 
       <article class="row">
-        <h3>Socker - <span class="donutPrice">8</span>kr</h3>
+        <h3><span class="donutName">Socker</span> - <span class="donutPrice">8</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -80,7 +79,7 @@
       </article>
 
       <article class="row">
-        <h3>Hallon - <span class="donutPrice">13</span>kr</h3>
+        <h3><span class="donutName">Hallon</span> - <span class="donutPrice">13</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -91,7 +90,7 @@
       </article>
 
       <article class="row">
-        <h3>Blåbär - <span class="donutPrice">14</span>kr</h3>
+        <h3><span class="donutName">Blåbär</span> - <span class="donutPrice">14</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -102,7 +101,7 @@
       </article>
 
       <article class="row">
-        <h3>Banan - <span class="donutPrice">12</span>kr</h3>
+        <h3><span class="donutName">Banan</span> - <span class="donutPrice">12</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -113,7 +112,7 @@
       </article>
 
       <article class="row">
-        <h3>Oreo - <span class="donutPrice">20</span>kr</h3>
+        <h3><span class="donutName">Oreo</span> - <span class="donutPrice">20</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -124,7 +123,7 @@
       </article>
 
       <article class="row">
-        <h3>Lakrits - <span class="donutPrice">5</span>kr</h3>
+        <h3><span class="donutName">Lakrits</span> - <span class="donutPrice">5</span>kr</h3>
         <figure>
           <img src="" alt="" />
         </figure>
@@ -135,7 +134,7 @@
       </article>
     </main>
 
-    <aside>
+    <section>
       <form action="" id="checkoutForm">
         <label>
           Förnamn:<br />
@@ -216,10 +215,16 @@
           Beställ nu
         </button>
 
-        <button id="clearForm" aria-label="Clear order">
+        <button id="clearOrder" aria-label="Clear order">
           Rensa beställning
         </button>
       </form>
+    </section>
+
+    <aside>
+      <h2>Varukorg</h2>
+      <ul id="myCart"></ul>
+      <span id="sumPriceAll"></span>
     </aside>
 
     <script src="script.js"></script>
