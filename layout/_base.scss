@@ -59,10 +59,6 @@ form {
   }
 }
 
-section {
-  // display: none;
-}
-
 aside {
 
   border: 4px solid black;
@@ -73,3 +69,15 @@ aside {
   }
 }
 
+.cartTitle {
+  display: inline-block;
+  width: 25%;
+  border-bottom: solid 2px black;
+}
+
+#cart {
+  span {
+    display: inline-block;
+    width: 25%;
+  }
+}
