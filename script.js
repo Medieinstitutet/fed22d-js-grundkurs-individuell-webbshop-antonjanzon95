@@ -1,9 +1,16 @@
 /* eslint-disable no-plusplus */
 const buttonClear = document.querySelector('#clearOrder');
-
 const cart = document.querySelector('#cart');
-
 const donutContainer = document.querySelector('#donuts');
+const firstName = document.querySelector('#firstName');
+const lastName = document.querySelector('#lastName');
+const address = document.querySelector('#address');
+const postalCode = document.querySelector('#postalCode');
+// const location = document.querySelector('#location');
+const entryCode = document.querySelector('#entryCode');
+// const phoneNumber = document.querySelector('#phoneNumber');
+// const email = document.querySelector('#email');
+// const discountCode = document.querySelector('#discountCode');
 
 // array of all donuts
 const donuts = [
@@ -127,18 +134,81 @@ function renderCart() {
     (previousValue, donut) => (donut.amount * donut.price) + previousValue,
     0,
   );
-  cart.innerHTML += `Totalt ${sum} kr.`;
+  cart.innerHTML += `
+  <div id="sumContainer">
+    <span id="sum">Totalt ${sum}kr</span>
+  </div>
+  `;
 }
 
+// form input checks
+const letters = /^[A-Za-zÅÄÖåäö]+$/;
 
-// clear checkout form
-function clearOrder() {
-  const checkoutForm = document.querySelector('#checkoutForm');
-  // also add items in shopping cart here
-  // also clear items from shopping cart here
+let firstNameIsOk = false;
+let lastNameIsOk = false;
 
-  checkoutForm.reset();
+
+// first name
+function checkFirstName() {
+  if (firstName.value.match(letters)) {
+    firstName.style.border = 'solid 3px blue';
+    firstNameIsOk = true;
+  } else {
+    firstName.style.border = 'solid 3px red';
+    alert('Invalid first name.');
+    firstNameIsOk = false;
+  }
+  activateSubmitButton();
 }
 
-// add click function to clear form button
-buttonClear.addEventListener('click', clearOrder);
+firstName.addEventListener('change', checkFirstName);
+
+// last name
+function checkLastName() {
+  if (lastName.value.match(letters)) {
+    lastName.style.border = 'solid 3px blue';
+    return true;
+  }
+  lastName.style.border = 'solid 3px red';
+  alert('Invalid last name.');
+  return false;
+}
+
+lastName.addEventListener('change', checkLastName);
+
+// address
+function checkAddress() {
+  const lettersNum = /^[A-Za-zÅÄÖåäö\s0-9]+$/;
+  if (address.value.match(lettersNum)) {
+    address.style.border = 'solid 3px blue';
+    return true;
+  }
+  address.style.border = 'solid 3px red';
+  alert('Invalid address.');
+  return false;
+}
+
+address.addEventListener('change', checkAddress);
+
+// activate submit button
+function activateSubmitButton() {
+  if (firstNameIsOk) {
+    document.querySelector('#orderButton').removeAttribute('disabled');
+  }
+}
+
+// function checkLastName() {
+//   if ()
+// }
+
+// // clear checkout form
+// function clearOrder() {
+//   const checkoutForm = document.querySelector('#checkoutForm');
+//   // also add items in shopping cart here
+//   // also clear items from shopping cart here
+
+//   checkoutForm.reset();
+// }
+
+// // add click function to clear form button
+// buttonClear.addEventListener('click', clearOrder);
