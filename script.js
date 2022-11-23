@@ -11,6 +11,7 @@ const doorCode = document.querySelector('#doorCode');
 const phoneNumber = document.querySelector('#phoneNumber');
 const email = document.querySelector('#email');
 const discountCode = document.querySelector('#discountCode');
+const sortBy = document.querySelector('#sortBy');
 
 // array of all donuts
 const donuts = [
@@ -75,6 +76,20 @@ const donuts = [
     amount: 0,
   },
 ];
+
+// sort donuts
+function sortDonuts() {
+  if (sortBy.value == 'nameDonut') {
+    donuts.sort((donut1, donut2) => donut1.name > donut2.name);
+  } else if (sortBy.value == 'priceAsc') {
+    donuts.sort((donut1, donut2) => donut1.price - donut2.price);
+  } else if (sortBy.value == 'priceDesc') {
+    donuts.sort((donut1, donut2) => donut2.price - donut1.price);
+  }
+  renderDonuts();
+}
+
+sortBy.addEventListener('click', sortDonuts);
 
 // render all donuts
 function renderDonuts() {
