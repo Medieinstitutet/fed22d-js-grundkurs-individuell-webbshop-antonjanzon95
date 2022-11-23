@@ -6,11 +6,11 @@ const firstName = document.querySelector('#firstName');
 const lastName = document.querySelector('#lastName');
 const address = document.querySelector('#address');
 const postalCode = document.querySelector('#postalCode');
-// const location = document.querySelector('#location');
-const entryCode = document.querySelector('#entryCode');
-// const phoneNumber = document.querySelector('#phoneNumber');
-// const email = document.querySelector('#email');
-// const discountCode = document.querySelector('#discountCode');
+const locality = document.querySelector('#locality');
+const doorCode = document.querySelector('#doorCode');
+const phoneNumber = document.querySelector('#phoneNumber');
+const email = document.querySelector('#email');
+const discountCode = document.querySelector('#discountCode');
 
 // array of all donuts
 const donuts = [
@@ -146,6 +146,12 @@ const letters = /^[A-Za-zÅÄÖåäö]+$/;
 
 let firstNameIsOk = false;
 let lastNameIsOk = false;
+let addressIsOk = false;
+let postalCodeIsOk = false;
+let localityIsOk = false;
+let doorCodeIsOk = false;
+let phoneNumberIsOk = false;
+let emailIsOk = false;
 
 
 // first name
@@ -167,11 +173,13 @@ firstName.addEventListener('change', checkFirstName);
 function checkLastName() {
   if (lastName.value.match(letters)) {
     lastName.style.border = 'solid 3px blue';
-    return true;
+    lastNameIsOk = true;
+  } else {
+    lastName.style.border = 'solid 3px red';
+    alert('Invalid last name.');
+    lastNameIsOk = false;
   }
-  lastName.style.border = 'solid 3px red';
-  alert('Invalid last name.');
-  return false;
+  activateSubmitButton();
 }
 
 lastName.addEventListener('change', checkLastName);
@@ -181,21 +189,102 @@ function checkAddress() {
   const lettersNum = /^[A-Za-zÅÄÖåäö\s0-9]+$/;
   if (address.value.match(lettersNum)) {
     address.style.border = 'solid 3px blue';
-    return true;
+    addressIsOk = true;
+  } else {
+    address.style.border = 'solid 3px red';
+    alert('Invalid address.');
+    addressIsOk = false;
   }
-  address.style.border = 'solid 3px red';
-  alert('Invalid address.');
-  return false;
+  activateSubmitButton();
 }
 
 address.addEventListener('change', checkAddress);
 
+// postal code
+function checkPostalCode() {
+  const numSpace = /^[0-9\s]+$/;
+  if (postalCode.value.match(numSpace) && postalCode.value.length == 5) {
+    postalCode.style.border = 'solid 3px blue';
+    postalCodeIsOk = true;
+  } else {
+    postalCode.style.border = 'solid 3px red';
+    postalCodeIsOk = false;
+  }
+  activateSubmitButton();
+}
+
+postalCode.addEventListener('change', checkPostalCode);
+
+// locality
+function checkLocality () {
+  const lettersSpace = /^[A-Za-zÅÄÖåäö\s]+$/;
+  if (locality.value.match(lettersSpace)) {
+    locality.style.border = 'solid 3px blue';
+    localityIsOk = true;
+  } else {
+    locality.style.border = 'solid 3px red';
+    localityIsOk = false;
+  }
+  activateSubmitButton();
+}
+
+locality.addEventListener('change', checkLocality);
+
+// door code (not necessary)
+function checkDoorCode() {
+  const num = /^[0-9]+$/;
+  if (doorCode.value.match(num)) {
+    doorCode.style.border = 'solid 3px blue';
+    doorCodeIsOk = true;
+  } else {
+    doorCode.style.border = 'solid 3px red';
+    doorCodeIsOk = false;
+  }
+  activateSubmitButton();
+}
+
+doorCode.addEventListener('change', checkDoorCode);
+
+// phone number
+function checkPhoneNumber() {
+  const numSpaceHy = /^[0-9-]+$/;
+  if (phoneNumber.value.match(numSpaceHy) && phoneNumber.value.length == 10) {
+    phoneNumber.style.border = 'solid 3px blue';
+    phoneNumberIsOk = true;
+  } else {
+    phoneNumber.style.border = 'solid 3px red';
+    phoneNumberIsOk = false;
+  }
+  activateSubmitButton();
+}
+
+phoneNumber.addEventListener('change', checkPhoneNumber);
+
+// email
+function checkEmail() {
+  const emailCheck = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (email.value.match(emailCheck)) {
+    email.style.border = 'solid 3px blue';
+    emailIsOk = true;
+  } else {
+    email.style.border = 'solid 3px red';
+    emailIsOk = false;
+  }
+  activateSubmitButton();
+}
+
+email.addEventListener('change', checkEmail);
+
 // activate submit button
 function activateSubmitButton() {
-  if (firstNameIsOk) {
+  if (firstNameIsOk && lastNameIsOk && addressIsOk && postalCodeIsOk && localityIsOk && phoneNumberIsOk && emailIsOk) {
     document.querySelector('#orderButton').removeAttribute('disabled');
+  } else {
+    document.querySelector('#orderButton').setAttribute('disabled', '');
   }
 }
+
+
 
 // function checkLastName() {
 //   if ()
