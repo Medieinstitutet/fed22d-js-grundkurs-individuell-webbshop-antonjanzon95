@@ -80,7 +80,11 @@ const donuts = [
 // sort donuts
 function sortDonuts() {
   if (sortBy.value == 'nameDonut') {
-    donuts.sort((donut1, donut2) => donut1.name > donut2.name);
+    donuts.sort((donut1, donut2) => {
+      if (donut1.name < donut2.name) {
+        return -1;
+      }
+    });
   } else if (sortBy.value == 'priceAsc') {
     donuts.sort((donut1, donut2) => donut1.price - donut2.price);
   } else if (sortBy.value == 'priceDesc') {
