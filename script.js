@@ -77,24 +77,6 @@ const donuts = [
   },
 ];
 
-// sort donuts
-function sortDonuts() {
-  if (sortBy.value === 'nameDonut') {
-    donuts.sort((donut1, donut2) => {
-      if (donut1.name < donut2.name) {
-        return -1;
-      }
-    });
-  } else if (sortBy.value === 'priceAsc') {
-    donuts.sort((donut1, donut2) => donut1.price - donut2.price);
-  } else if (sortBy.value === 'priceDesc') {
-    donuts.sort((donut1, donut2) => donut2.price - donut1.price);
-  }
-  renderDonuts();
-}
-
-sortBy.addEventListener('click', sortDonuts);
-
 // render all donuts
 function renderDonuts() {
   donutContainer.innerHTML = '';
@@ -107,17 +89,38 @@ function renderDonuts() {
     const total = donuts[i].amount * donuts[i].price;
     donutContainer.innerHTML += `
     <article>
-      <h3>${donuts[i].name} - <span class="price">${donuts[i].price}</span> kr</h3>
-      Antal: ${donuts[i].amount} st <br>
-      Totalt: ${total} kr
-      ${drawFilledStar}${drawHollowStar}
-      <button class="add" data-id="${i}">+</button>
-      <button class="remove" data-id="${i}">-</button>
+      <img src="/img/${donuts[i].name}.webp"
+      alt="Bild på en ${donuts[i].name}munk."
+      width="250"
+      height="250"
+      />
+      <div class="donutContainer">
+        <h3>${donuts[i].name} - <span class="price">${donuts[i].price}</span> kr</h3>
+        Antal: ${donuts[i].amount} st <br>
+        Totalt: ${total} kr
+        ${drawFilledStar}${drawHollowStar}
+        <button class="add" data-id="${i}">+</button>
+        <button class="remove" data-id="${i}">-</button>
+      </div>
     </article>
     `;
   }
 
-  console.log('hej' * 4);
+  // add donuts
+  function addDonut(e) {
+    const clickedDonut = e.currentTarget.dataset.id;
+    donuts[clickedDonut].amount += 1;
+    renderDonuts();
+  }
+
+  // remove donuts
+  function removeDonut(e) {
+    const clickedDonut = e.currentTarget.dataset.id;
+    if (donuts[clickedDonut].amount > 0) {
+      donuts[clickedDonut].amount -= 1;
+    }
+    renderDonuts();
+  }
 
   // add event listeners to each button
   document.querySelectorAll('.add').forEach((btn) => {
@@ -126,26 +129,33 @@ function renderDonuts() {
   document.querySelectorAll('.remove').forEach((btn) => {
     btn.addEventListener('click', removeDonut);
   });
+
   renderCart();
 }
 
-// add donuts
-function addDonut(e) {
-  const clickedDonut = e.currentTarget.dataset.id;
-  donuts[clickedDonut].amount += 1;
-  renderDonuts();
-}
+renderDonuts();
 
-// remove donuts
-function removeDonut(e) {
-  const clickedDonut = e.currentTarget.dataset.id;
-  if (donuts[clickedDonut].amount > 0) {
-    donuts[clickedDonut].amount -= 1;
+// sort donuts
+function sortDonuts() {
+  if (sortBy.value === 'nameDonut') {
+    donuts.sort((donut1, donut2) => {
+      if (donut1.name < donut2.name) {
+        return -1;
+      }
+    });
+  } else if (sortBy.value === 'priceAsc') {
+    donuts.sort((donut1, donut2) => donut1.price - donut2.price);
+  } else if (sortBy.value === 'priceDesc') {
+    donuts.sort((donut1, donut2) => donut2.price - donut1.price);
+  } else if (sortBy.value === 'ratingAsc') {
+    donuts.sort((donut1, donut2) => donut1.rating - donut2.rating);
+  } else if (sortBy.value === 'ratingDesc') {
+    donuts.sort((donut1, donut2) => donut2.rating - donut1.rating);
   }
   renderDonuts();
 }
 
-renderDonuts();
+sortBy.addEventListener('click', sortDonuts);
 
 function renderCart() {
   cart.innerHTML = '';

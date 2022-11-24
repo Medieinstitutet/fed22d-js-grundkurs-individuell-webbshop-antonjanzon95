@@ -38,11 +38,13 @@ header {
 
 article {
   margin: 15px 0px;
-  padding: 10px;
-  height: 200px;
-  border: 1px solid black;
   border-radius: 1rem;
-  box-shadow: 2px 2px 3px gray;
+  box-shadow: 0 4px 8px 0 rgb(69, 69, 69);
+
+  img {
+    width: 100%;
+    border-radius: 1rem 1rem 0 0;
+  }
 
   button {
     border: none;
@@ -52,6 +54,10 @@ article {
     background: black;
     color: white;
     font-size: 2rem;
+  }
+
+  .donutContainer {
+    padding: 10px;
   }
 }
 
