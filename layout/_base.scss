@@ -57,7 +57,6 @@ article {
 
 form {
   padding: 5px;
-  max-width: 90vw;
   margin: 0 auto;
   border: solid 1px black;
   border-radius: 5px;
@@ -99,4 +98,8 @@ aside {
       }
     }
   }
+}
+
+.rating {
+  font-size: 1.5rem;
 }

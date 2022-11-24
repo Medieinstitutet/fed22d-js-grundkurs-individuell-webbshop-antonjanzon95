@@ -99,12 +99,15 @@ sortBy.addEventListener('click', sortDonuts);
 function renderDonuts() {
   donutContainer.innerHTML = '';
   for (let i = 0; i < donuts.length; i++) {
+    let hollowStar = 5 - donuts[i].rating;
     const total = donuts[i].amount * donuts[i].price;
     donutContainer.innerHTML += `
     <article>
       <h3>${donuts[i].name} - <span class="price">${donuts[i].price}</span> kr</h3>
       Antal: ${donuts[i].amount} st <br>
       Totalt: ${total} kr
+      <i class='fa fa-star' style="font-size: 1.5rem;"></i>
+      <i class='fa fa-star-o' style="font-size: 1.5rem;"></i>
       <button class="add" data-id="${i}">+</button>
       <button class="remove" data-id="${i}">-</button>
     </article>
