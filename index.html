@@ -7,11 +7,18 @@
     <title>Gottfrids Munkar</title>
 
     <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   </head>
   <body>
     <header>
       <h1>Gottfrids Munkar</h1>
-      <button>Varukorg</button>
+      <a href="#cartContainer"><i class="fa-solid fa-cart-shopping" style="font-size: 2rem; color:black;"></i></a>
     </header>
 
     <main class="wrapper">
@@ -35,7 +42,7 @@
       <div id="cart"></div>
     </aside>
 
-    <section>
+    <section class="wrapper">
       <form action="" id="checkoutForm">
         <label>
           Förnamn:<br />
@@ -116,7 +123,7 @@
           Beställ nu
         </button>
 
-        <button id="clearOrder" aria-label="Clear order">
+        <button id="clearOrder" aria-label="Clear order" type="reset">
           Rensa beställning
         </button>
       </form>

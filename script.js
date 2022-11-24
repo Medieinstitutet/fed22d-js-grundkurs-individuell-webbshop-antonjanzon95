@@ -24,31 +24,31 @@ const donuts = [
   {
     name: 'Vanilj',
     price: 10,
-    rating: 4,
+    rating: 5,
     amount: 0,
   },
   {
     name: 'Choklad',
     price: 15,
-    rating: 4,
+    rating: 5,
     amount: 0,
   },
   {
     name: 'Äpple',
     price: 12,
-    rating: 4,
+    rating: 2,
     amount: 0,
   },
   {
     name: 'Socker',
     price: 8,
-    rating: 4,
+    rating: 3,
     amount: 0,
   },
   {
     name: 'Hallon',
     price: 13,
-    rating: 4,
+    rating: 3,
     amount: 0,
   },
   {
@@ -60,34 +60,34 @@ const donuts = [
   {
     name: 'Banan',
     price: 12,
-    rating: 4,
+    rating: 3,
     amount: 0,
   },
   {
     name: 'Oreo',
     price: 20,
-    rating: 4,
+    rating: 5,
     amount: 0,
   },
   {
     name: 'Lakrits',
     price: 5,
-    rating: 4,
+    rating: 1,
     amount: 0,
   },
 ];
 
 // sort donuts
 function sortDonuts() {
-  if (sortBy.value == 'nameDonut') {
+  if (sortBy.value === 'nameDonut') {
     donuts.sort((donut1, donut2) => {
       if (donut1.name < donut2.name) {
         return -1;
       }
     });
-  } else if (sortBy.value == 'priceAsc') {
+  } else if (sortBy.value === 'priceAsc') {
     donuts.sort((donut1, donut2) => donut1.price - donut2.price);
-  } else if (sortBy.value == 'priceDesc') {
+  } else if (sortBy.value === 'priceDesc') {
     donuts.sort((donut1, donut2) => donut2.price - donut1.price);
   }
   renderDonuts();
@@ -99,17 +99,25 @@ sortBy.addEventListener('click', sortDonuts);
 function renderDonuts() {
   donutContainer.innerHTML = '';
   for (let i = 0; i < donuts.length; i++) {
+    const filledStarIcon = '<i class="fa fa-star" style="font-size: 1.5rem;"></i>';
+    const emptyStarIcon = '<i class="fa fa-star-o" style="font-size: 1.5rem;"></i>';
+    const maxRating = 5;
+    const drawFilledStar = filledStarIcon.repeat(donuts[i].rating);
+    const drawHollowStar = emptyStarIcon.repeat(maxRating - donuts[i].rating);
     const total = donuts[i].amount * donuts[i].price;
     donutContainer.innerHTML += `
     <article>
       <h3>${donuts[i].name} - <span class="price">${donuts[i].price}</span> kr</h3>
       Antal: ${donuts[i].amount} st <br>
       Totalt: ${total} kr
+      ${drawFilledStar}${drawHollowStar}
       <button class="add" data-id="${i}">+</button>
       <button class="remove" data-id="${i}">-</button>
     </article>
     `;
   }
+
+  console.log('hej' * 4);
 
   // add event listeners to each button
   document.querySelectorAll('.add').forEach((btn) => {
@@ -168,10 +176,23 @@ let lastNameIsOk = false;
 let addressIsOk = false;
 let postalCodeIsOk = false;
 let localityIsOk = false;
-let doorCodeIsOk = false;
 let phoneNumberIsOk = false;
 let emailIsOk = false;
 
+// activate submit button
+function activateSubmitButton() {
+  if (firstNameIsOk
+    && lastNameIsOk
+    && addressIsOk
+    && postalCodeIsOk
+    && localityIsOk
+    && phoneNumberIsOk
+    && emailIsOk) {
+    document.querySelector('#orderButton').removeAttribute('disabled');
+  } else {
+    document.querySelector('#orderButton').setAttribute('disabled', '');
+  }
+}
 
 // first name
 function checkFirstName() {
@@ -235,7 +256,7 @@ function checkPostalCode() {
 postalCode.addEventListener('change', checkPostalCode);
 
 // locality
-function checkLocality () {
+function checkLocality() {
   const lettersSpace = /^[A-Za-zÅÄÖåäö\s]+$/;
   if (locality.value.match(lettersSpace)) {
     locality.style.border = 'solid 3px blue';
@@ -248,21 +269,6 @@ function checkLocality () {
 }
 
 locality.addEventListener('change', checkLocality);
-
-// door code (not necessary)
-function checkDoorCode() {
-  const num = /^[0-9]+$/;
-  if (doorCode.value.match(num)) {
-    doorCode.style.border = 'solid 3px blue';
-    doorCodeIsOk = true;
-  } else {
-    doorCode.style.border = 'solid 3px red';
-    doorCodeIsOk = false;
-  }
-  activateSubmitButton();
-}
-
-doorCode.addEventListener('change', checkDoorCode);
 
 // phone number
 function checkPhoneNumber() {
@@ -293,21 +299,6 @@ function checkEmail() {
 }
 
 email.addEventListener('change', checkEmail);
-
-// activate submit button
-function activateSubmitButton() {
-  if (firstNameIsOk && lastNameIsOk && addressIsOk && postalCodeIsOk && localityIsOk && phoneNumberIsOk && emailIsOk) {
-    document.querySelector('#orderButton').removeAttribute('disabled');
-  } else {
-    document.querySelector('#orderButton').setAttribute('disabled', '');
-  }
-}
-
-
-
-// function checkLastName() {
-//   if ()
-// }
 
 // // clear checkout form
 // function clearOrder() {
