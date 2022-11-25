@@ -95,12 +95,14 @@ function renderDonuts() {
       height="250"
       />
       <div class="donutContainer">
-        <h3>${donuts[i].name} - <span class="price">${donuts[i].price}</span> kr</h3>
-        Antal: ${donuts[i].amount} st <br>
-        Totalt: ${total} kr
-        ${drawFilledStar}${drawHollowStar}
-        <button class="add" data-id="${i}">+</button>
+        <h3>${donuts[i].name} - ${donuts[i].price}kr</h3>
+        <span class="amount">${donuts[i].amount} st</span><br>
+        <span class="price">${total}kr</span>
         <button class="remove" data-id="${i}">-</button>
+        <button class="add" data-id="${i}">+</button><br>
+        <div class="rating">
+          ${drawFilledStar}${drawHollowStar}
+        </div>
       </div>
     </article>
     `;

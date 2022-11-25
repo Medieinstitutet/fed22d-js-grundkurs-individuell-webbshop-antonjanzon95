@@ -36,8 +36,13 @@ header {
   padding: 10px;
 }
 
+#donuts {
+  padding: 0 auto;
+}
+
 article {
-  margin: 15px 0px;
+  max-width: 350px;
+  margin: 30px auto;
   border-radius: 1rem;
   box-shadow: 0 4px 8px 0 rgb(69, 69, 69);
 
@@ -46,18 +51,48 @@ article {
     border-radius: 1rem 1rem 0 0;
   }
 
-  button {
-    border: none;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 1rem;
-    background: black;
-    color: white;
-    font-size: 2rem;
-  }
-
   .donutContainer {
-    padding: 10px;
+    position: relative;
+    padding: 5px;
+    height: 150px;
+    // display: grid;
+    // justify-items: center;
+    // grid-template-columns: repeat(1fr, 3);
+    // grid-template-rows: repeat(1fr, 4);
+    // grid-template-areas: 
+    // '  .    header  . '
+    // '  .   remove add'
+    // 'amount remove add'
+    // 'price  rating  . '
+    // ;
+
+    // .remove {
+    //   grid-area: remove;
+    // }
+
+    // .add {
+    //   grid-area: add;
+    // }
+    
+    // .rating {
+    //   grid-area: rating;
+    // }
+
+    h3 {
+      // grid-area: header;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    button {
+      border: none;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 1rem;
+      background: black;
+      color: white;
+      font-size: 2rem;
+    }
   }
 }
 
