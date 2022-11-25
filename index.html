@@ -48,51 +48,51 @@
       <form action="" id="checkoutForm">
         <label>
           Förnamn:<br />
-          <input type="text" id="firstName" placeholder="Förnamn" /> </label
+          <input type="text" id="firstName" /> </label
         ><br />
 
         <label>
           Efternamn:<br />
-          <input type="text" id="lastName" placeholder="Efternamn" /> </label
+          <input type="text" id="lastName" /> </label
         ><br />
 
         <label>
           Adress:<br />
-          <input type="text" id="address" placeholder="Adress" /> </label
+          <input type="text" id="address" /> </label
         ><br />
 
         <label>
           Postnummer:<br />
-          <input type="number" id="postalCode" placeholder="Postnummer" /> </label
+          <input type="number" id="postalCode" /> </label
         ><br />
 
         <label>
           Postort:<br />
-          <input type="text" id="locality" placeholder="Postort" /> </label
+          <input type="text" id="locality" /> </label
         ><br />
 
         <label>
           Ev. portkod:<br />
-          <input type="number" id="doorCode" placeholder="Portkod" /> </label
+          <input type="number" id="doorCode" /> </label
         ><br />
 
         <label>
           Telefonnummer (mobil):<br />
-          <input type="number" id="phoneNumber" placeholder="Telefonnummer" /> </label
+          <input type="number" id="phoneNumber" /> </label
         ><br />
 
         <label>
           E-postadress:<br />
-          <input type="text" id="email" placeholder="E-postadress" /> </label
+          <input type="text" id="email" /> </label
         ><br />
 
         <label>
           Har du en rabattkod?<br />
-          <input type="text" id="discountCode" placeholder="Rabattkod" /> </label
+          <input type="text" id="discountCode" /> </label
         ><br />
 
         <p>Välj betalsätt:</p>
-        <input
+        <input checked
           type="radio"
           id="debitCard"
           name="paymentOption"
@@ -102,6 +102,8 @@
 
         <input type="radio" id="invoice" name="paymentOption" value="invoice" />
         <label for="invoice">Faktura</label><br />
+
+        <div id="paymentWindow"></div>
 
         <input
           type="checkbox"
@@ -129,6 +131,8 @@
           Rensa beställning
         </button>
       </form>
+
+      <div id="confirmationWindow"></div>
     </section>
 
     <script src="script.js"></script>
