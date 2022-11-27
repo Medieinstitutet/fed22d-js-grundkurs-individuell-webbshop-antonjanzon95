@@ -12,6 +12,7 @@ const sortBy = document.querySelector('#sortBy');
 const confirmationWindow = document.querySelector('#confirmationWindow');
 const paymentWindow = document.querySelector('#paymentWindow');
 const paymentOptions = document.querySelectorAll('input[name="paymentOption"]');
+const orderButton = document.querySelector('#orderButton');
 
 // form validation variables
 const firstName = document.querySelector('#firstName');
@@ -22,6 +23,7 @@ const locality = document.querySelector('#locality');
 const doorCode = document.querySelector('#doorCode');
 const phoneNumber = document.querySelector('#phoneNumber');
 const email = document.querySelector('#email');
+
 const letters = /^[A-Za-zÅÄÖåäö]+$/;
 let firstNameIsOk = false;
 let lastNameIsOk = false;
@@ -32,6 +34,7 @@ let phoneNumberIsOk = false;
 let emailIsOk = false;
 let debitCardNumberIsOk = false;
 let socialSecNumIsOk = false;
+let selectedPaymentOption;
 
 // array of all donuts
 const donuts = [
@@ -246,10 +249,10 @@ function activateSubmitButton() {
     && localityIsOk
     && phoneNumberIsOk
     && emailIsOk
-    && debitCardNumberIsOk) {
-    document.querySelector('#orderButton').removeAttribute('disabled');
+    && (socialSecNumIsOk || selectedPaymentOption == 'debitCard')) {
+    orderButton.removeAttribute('disabled');
   } else {
-    document.querySelector('#orderButton').setAttribute('disabled', '');
+    orderButton.setAttribute('disabled', '');
   }
 }
 
@@ -345,42 +348,19 @@ function checkEmail() {
   activateSubmitButton();
 }
 
-function checkDebitCard() {
-  const mastercardRegEx = /^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$/;
-  const visaRegEx = /^4[0-9]{12}(?:[0-9]{3})?$/;
-  if (debitCardNumber.value.match(mastercardRegEx)) {
-    debitCardNumber.style.border = 'solid 3px blue';
-    debitCardNumberIsOk = true;
-    paymentWindow += `Mastercard!`;
-  } else if (debitCardNumber.value.match(visaRegEx)) {
-    debitCardNumber.style.border = 'solid 3px blue';
-    debitCardNumberIsOk = true;
-    paymentWindow += `Visa!`;
-  } else {
-    debitCardNumber.style.border = 'solid 3px red';
-    debitCardNumberIsOk = false;
-  }
-
-  activateSubmitButton();
-}
-
-const debitCardNumber = document.querySelector('#debitCardNumber');
-
 // render payment window
 function renderPaymentWindow() {
   paymentWindow.innerHTML = '';
-  let selectedPaymentOption;
   paymentOptions.forEach((option) => {
     if (option.checked) {
       selectedPaymentOption = option.value;
-      console.log(selectedPaymentOption);
     }
   });
   if (selectedPaymentOption == 'debitCard') {
-    paymentWindow.innerHTML += 
+    paymentWindow.innerHTML = 
     `
       <label>
-        Kortnummer (Endast Visa eller Mastercard)<br />
+        Kortnummer<br />
         <input type="number" id="debitCardNumber">
       </label><br />
       <label>
@@ -412,6 +392,10 @@ function renderPaymentWindow() {
         <option value="y28">28</option>
         <option value="y29">29</option>
         </select>
+      </label><br>
+      <label>
+        CVV<br />
+        <input type="number" id="debitCardCVV"> 
       </label>
     `;
   } else if (selectedPaymentOption == 'invoice') {
@@ -422,16 +406,45 @@ function renderPaymentWindow() {
         <input type="number" id="socialSecNum">
       </label>
     `;
+    const socialSecNum = document.querySelector('#socialSecNum');
+    // check social security number
+    function checkSocSecNum() {
+      const socSecRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/g;
+      if (socialSecNum.value.match(socSecRegEx)) {
+        socialSecNum.style.border = 'solid 3px blue';
+        socialSecNumIsOk = true;
+      } else {
+        socialSecNum.style.border = 'solid 3px red';
+        socialSecNumIsOk = false;
+      }
+    }
+    socialSecNum.addEventListener('change', checkSocSecNum);
   }
+  activateSubmitButton();
 }
+
+
 
 // render confirmation window
 function renderConfirmationWindow() {
-  confirmationWindow.innerHTML = `
-  <h2>Bekräftelse</h2>
-  Du har beställt:
-
+  confirmationWindow.innerHTML = 
   `
+    Du har beställt:
+    <ul>
+  `;
+  let orderedDonuts = [];
+  
+  for (let i = 0; i < donuts.length; i++) {
+    if (donuts[i].amount > 0) {
+      orderedDonuts.push(donuts[i]);
+    }
+  }
+
+  for (let i = 0; i < orderedDonuts.length; i++) {
+    confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}</li>`;
+  }
+
+  confirmationWindow.innerHTML += `</ul>`;
 }
 
 // // clear checkout form
@@ -459,12 +472,15 @@ postalCode.addEventListener('change', checkPostalCode);
 locality.addEventListener('change', checkLocality);
 phoneNumber.addEventListener('change', checkPhoneNumber);
 email.addEventListener('change', checkEmail);
-// debitCardNumber.addEventListener('change', checkDebitCard);
+
 
 // render payment window
 paymentOptions.forEach((checkbox) => {
   checkbox.addEventListener('click', renderPaymentWindow);
 });
+
+// render confirmation window
+orderButton.addEventListener('click', renderConfirmationWindow);
   
 // sort donuts
 sortBy.addEventListener('click', sortDonuts);
