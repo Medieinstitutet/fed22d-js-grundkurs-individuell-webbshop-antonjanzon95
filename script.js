@@ -14,6 +14,7 @@ const paymentWindow = document.querySelector('#paymentWindow');
 const paymentOptions = document.querySelectorAll('input[name="paymentOption"]');
 const orderButton = document.querySelector('#orderButton');
 const checkoutForm = document.querySelector('#checkoutForm');
+const addedMessage = document.querySelector('#addedMessage');
 
 // form validation variables
 const firstName = document.querySelector('#firstName');
@@ -144,6 +145,7 @@ function renderDonuts() {
     const clickedDonut = e.currentTarget.dataset.id;
     donuts[clickedDonut].amount += 1;
     renderDonuts();
+    showAddedMessage();
   }
 
   // remove donuts
@@ -199,6 +201,7 @@ function renderCart() {
     donuts[clickedDonut].amount += 1;
     renderCart();
     renderDonuts();
+    showAddedMessage();
   }
 
   // remove donuts
@@ -221,6 +224,19 @@ function renderCart() {
   });
 }
 
+// show message for 2 seconds when donut is added to cart
+function showAddedMessage() {
+  addedMessage.style.display = 'block';
+  addedMessage.innerHTML = `<span>Munken har lagts till i varukorgen.</span>`
+  setTimeout(clearMessage, 2000);
+}
+
+// clear the "added-message"
+function clearMessage() {
+  addedMessage.style.display = 'none';
+  addedMessage.innerHTML = ``;
+}
+
 // sort donuts
 function sortDonuts() {
   if (sortBy.value === 'nameDonut') {
@@ -241,7 +257,8 @@ function sortDonuts() {
   renderDonuts();
 }
 
-// form input checks
+//////******************** form input checks **********************///////
+
 // activate submit button
 function activateSubmitButton() {
   if (firstNameIsOk
@@ -257,7 +274,6 @@ function activateSubmitButton() {
     orderButton.setAttribute('disabled', '');
   }
 }
-
 
 // first name
 function checkFirstName() {

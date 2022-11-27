@@ -55,12 +55,29 @@ form {
   }
 }
 
+#addedMessage {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  left: calc(50% - 150px);
+  height: 40px;
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgb(69, 69, 69);
+  background-color: rgb(245, 245, 245);
+  z-index: 3;
+  text-align: center;
+
+  span {
+    display: block;
+    padding: 10px;
+  }
+}
+
 ul {
   list-style: none;
-
+  
   li {
     list-style-type: none;
-    color: blue;
   }
 }
 
