@@ -13,6 +13,7 @@ const confirmationWindow = document.querySelector('#confirmationWindow');
 const paymentWindow = document.querySelector('#paymentWindow');
 const paymentOptions = document.querySelectorAll('input[name="paymentOption"]');
 const orderButton = document.querySelector('#orderButton');
+const checkoutForm = document.querySelector('#checkoutForm');
 
 // form validation variables
 const firstName = document.querySelector('#firstName');
@@ -24,7 +25,7 @@ const doorCode = document.querySelector('#doorCode');
 const phoneNumber = document.querySelector('#phoneNumber');
 const email = document.querySelector('#email');
 
-const letters = /^[A-Za-zÅÄÖåäö]+$/;
+const letters = /^[A-Za-zÅÄÖåäö-]+$/;
 let firstNameIsOk = false;
 let lastNameIsOk = false;
 let addressIsOk = false;
@@ -169,6 +170,11 @@ function renderDonuts() {
 // render cart
 function renderCart() {
   cart.innerHTML = '';
+  // calculate sum of all ordered donuts
+  const sum = donuts.reduce(
+    (previousValue, donut) => (donut.amount * donut.price) + previousValue,
+    0,
+);
   for (let i = 0; i < donuts.length; i++) {
     if (donuts[i].amount > 0) {
       cart.innerHTML += 
@@ -179,11 +185,7 @@ function renderCart() {
       `;
     }
   }
-  // calculate sum of all ordered donuts
-  const sum = donuts.reduce(
-    (previousValue, donut) => (donut.amount * donut.price) + previousValue,
-    0,
-  );
+
   cart.innerHTML += 
   `
     <div id="sumContainer">
@@ -249,21 +251,23 @@ function activateSubmitButton() {
     && localityIsOk
     && phoneNumberIsOk
     && emailIsOk
-    && (socialSecNumIsOk || selectedPaymentOption == 'debitCard')) {
+    && (socialSecNumIsOk || selectedPaymentOption === 'debitCard')) {
     orderButton.removeAttribute('disabled');
   } else {
     orderButton.setAttribute('disabled', '');
   }
 }
 
+
 // first name
 function checkFirstName() {
   if (firstName.value.match(letters)) {
+    document.querySelector('#errorFirstName').innerHTML = ``;
     firstName.style.border = 'solid 3px blue';
     firstNameIsOk = true;
   } else {
+    document.querySelector('#errorFirstName').innerHTML = `Vänligen fyll i ett giltigt förnamn.`;
     firstName.style.border = 'solid 3px red';
-    alert('Invalid first name.');
     firstNameIsOk = false;
   }
   activateSubmitButton();
@@ -272,11 +276,12 @@ function checkFirstName() {
 // last name
 function checkLastName() {
   if (lastName.value.match(letters)) {
+    document.querySelector('#errorLastName').innerHTML = ``;
     lastName.style.border = 'solid 3px blue';
     lastNameIsOk = true;
   } else {
+    document.querySelector('#errorLastName').innerHTML = `Vänligen fyll i ett giltigt efternamn.`;
     lastName.style.border = 'solid 3px red';
-    alert('Invalid last name.');
     lastNameIsOk = false;
   }
   activateSubmitButton();
@@ -284,13 +289,14 @@ function checkLastName() {
 
 // address
 function checkAddress() {
-  const lettersNum = /^[A-Za-zÅÄÖåäö\s0-9]+$/;
-  if (address.value.match(lettersNum)) {
+  const addressRegEx = /^[A-Za-zÅÄÖåäö\s0-9]+$/;
+  if (address.value.match(addressRegEx)) {
+    document.querySelector('#errorAddress').innerHTML = ``;
     address.style.border = 'solid 3px blue';
     addressIsOk = true;
   } else {
+    document.querySelector('#errorAddress').innerHTML = `Vänligen fyll i en giltig adress.`;
     address.style.border = 'solid 3px red';
-    alert('Invalid address.');
     addressIsOk = false;
   }
   activateSubmitButton();
@@ -298,11 +304,13 @@ function checkAddress() {
 
 // postal code
 function checkPostalCode() {
-  const numSpace = /^[0-9\s]+$/;
-  if (postalCode.value.match(numSpace) && postalCode.value.length == 5) {
+  const postalCodeRegEx = /^[0-9\s-]+$/;
+  if (postalCode.value.match(postalCodeRegEx) && postalCode.value.length == 5) {
+    document.querySelector('#errorPostalCode').innerHTML = ``;
     postalCode.style.border = 'solid 3px blue';
     postalCodeIsOk = true;
   } else {
+    document.querySelector('#errorPostalCode').innerHTML = `Vänligen fyll i ett giltigt postnummer (5 siffror).`;
     postalCode.style.border = 'solid 3px red';
     postalCodeIsOk = false;
   }
@@ -313,9 +321,11 @@ function checkPostalCode() {
 function checkLocality() {
   const lettersSpace = /^[A-Za-zÅÄÖåäö\s]+$/;
   if (locality.value.match(lettersSpace)) {
+    document.querySelector('#errorLocality').innerHTML = ``;
     locality.style.border = 'solid 3px blue';
     localityIsOk = true;
   } else {
+    document.querySelector('#errorLocality').innerHTML = `Vänligen fyll i en giltig ort. (Endast bokstäver)`;
     locality.style.border = 'solid 3px red';
     localityIsOk = false;
   }
@@ -326,9 +336,11 @@ function checkLocality() {
 function checkPhoneNumber() {
   const phoneRegEx = /^07([0-9][ -]*){7}[0-9]$/;
   if (phoneNumber.value.match(phoneRegEx)) {
+    document.querySelector('#errorPhoneNumber').innerHTML = ``;
     phoneNumber.style.border = 'solid 3px blue';
     phoneNumberIsOk = true;
   } else {
+    document.querySelector('#errorPhoneNumber').innerHTML = `Vänligen fyll i ett giltigt mobiltelefonnummer. (10 siffror)`;
     phoneNumber.style.border = 'solid 3px red';
     phoneNumberIsOk = false;
   }
@@ -339,9 +351,11 @@ function checkPhoneNumber() {
 function checkEmail() {
   const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (email.value.match(emailRegEx)) {
+    document.querySelector('#errorEmail').innerHTML = ``;
     email.style.border = 'solid 3px blue';
     emailIsOk = true;
   } else {
+    document.querySelector('#errorEmail').innerHTML = `Vänligen fyll i en giltig e-postadress.`;
     email.style.border = 'solid 3px red';
     emailIsOk = false;
   }
@@ -403,27 +417,31 @@ function renderPaymentWindow() {
     `
       <label>
         Personnummer:
+        <span id="errorSocSecNum"></span>
         <input type="number" id="socialSecNum">
       </label>
     `;
+
     const socialSecNum = document.querySelector('#socialSecNum');
+
     // check social security number
     function checkSocSecNum() {
       const socSecRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/g;
       if (socialSecNum.value.match(socSecRegEx)) {
+        document.querySelector('#errorSocSecNum').innerHTML = ``;
         socialSecNum.style.border = 'solid 3px blue';
         socialSecNumIsOk = true;
       } else {
+        document.querySelector('#errorSocSecNum').innerHTML = `Vänligen fyll i ett giltigt personnummer. (10 eller 12 siffror)`;
         socialSecNum.style.border = 'solid 3px red';
         socialSecNumIsOk = false;
       }
     }
     socialSecNum.addEventListener('change', checkSocSecNum);
   }
+
   activateSubmitButton();
 }
-
-
 
 // render confirmation window
 function renderConfirmationWindow() {
@@ -432,7 +450,6 @@ function renderConfirmationWindow() {
     Du har beställt:
     <ul>
   `;
-  let orderedDonuts = [];
   
   for (let i = 0; i < donuts.length; i++) {
     if (donuts[i].amount > 0) {
@@ -441,23 +458,26 @@ function renderConfirmationWindow() {
   }
 
   for (let i = 0; i < orderedDonuts.length; i++) {
-    confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}</li>`;
+    if (orderedDonuts[i].amount > 0) {
+      confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}</li>`;
+    }
   }
 
-  confirmationWindow.innerHTML += `</ul>`;
+  confirmationWindow.innerHTML += 
+  `
+    </ul>
+
+  `;
 }
 
-// // clear checkout form
-// function clearOrder() {
-//   const checkoutForm = document.querySelector('#checkoutForm');
-//   // also add items in shopping cart here
-//   // also clear items from shopping cart here
-
-//   checkoutForm.reset();
-// }
-
-// // add click function to clear form button
-// buttonClear.addEventListener('click', clearOrder);
+// clear checkout form
+function clearOrder() {
+  for (let i = 0; i < donuts.length; i++) {
+    donuts[i].amount = 0;
+  }
+  renderDonuts();
+  renderCart();
+}
 
 
 // **************************************************************************************************************
@@ -473,6 +493,8 @@ locality.addEventListener('change', checkLocality);
 phoneNumber.addEventListener('change', checkPhoneNumber);
 email.addEventListener('change', checkEmail);
 
+// clear order button
+buttonClear.addEventListener('click', clearOrder);
 
 // render payment window
 paymentOptions.forEach((checkbox) => {

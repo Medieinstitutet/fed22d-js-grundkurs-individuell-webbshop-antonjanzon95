@@ -16,6 +16,7 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   </head>
   <body>
+    
     <header>
       <h1>Gottfrids Munkar</h1>
       <a href="#cartContainer"><i class="fa-solid fa-cart-shopping" style="font-size: 2rem; color:black;"></i></a>
@@ -46,53 +47,60 @@
 
     <section class="wrapper">
       <form action="" id="checkoutForm">
-        <label>
+        <label class="formInputLabel">
           Förnamn:<br />
-          <input type="text" id="firstName" /> </label
+          <input type="text" id="firstName" /> <br />
+          <span id="errorFirstName"></span> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           Efternamn:<br />
-          <input type="text" id="lastName" /> </label
+          <input type="text" id="lastName" /> <br />
+          <span id="errorLastName"></span> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           Adress:<br />
-          <input type="text" id="address" /> </label
+          <input type="text" id="address" /> <br />
+          <span id="errorAddress"></span> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           Postnummer:<br />
-          <input type="number" id="postalCode" /> </label
+          <input type="number" id="postalCode" /> <br />
+          <span id="errorPostalCode"></span> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           Postort:<br />
-          <input type="text" id="locality" /> </label
+          <input type="text" id="locality" /> <br />
+          <span id="errorLocality"></span> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           Ev. portkod:<br />
           <input type="number" id="doorCode" /> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           Telefonnummer (mobil):<br />
-          <input type="number" id="phoneNumber" /> </label
+          <input type="number" id="phoneNumber" /><br />
+          <span id="errorPhoneNumber"></span> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           E-postadress:<br />
-          <input type="text" id="email" /> </label
+          <input type="text" id="email" /><br />
+          <span id="errorEmail"></span> </label
         ><br />
 
-        <label>
+        <label class="formInputLabel">
           Har du en rabattkod?<br />
           <input type="text" id="discountCode" /> </label
         ><br />
 
-        <p>Välj betalsätt:</p>
-        <input checked
+        Välj betalsätt:<br />
+        <input
           type="radio"
           id="debitCard"
           name="paymentOption"
@@ -101,7 +109,7 @@
         <label for="debitCard">Kort</label><br />
 
         <input type="radio" id="invoice" name="paymentOption" value="invoice" />
-        <label for="invoice">Faktura</label><br />
+        <label for="invoice">Faktura</label>
 
         <div id="paymentWindow"></div>
 

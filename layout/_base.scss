@@ -33,12 +33,35 @@ header {
   }
 }
 
-.wrapper {
-  padding: 10px;
+form {
+  padding: 5px;
+  margin: 0 auto;
+  border: solid 1px black;
+  border-radius: 5px;
+
+  .formInputLabel {
+    display: block;
+
+    input {
+      height: 2rem;
+      border: solid 3px blue;
+    }
+
+    span {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: red;
+    }
+  }
 }
 
-#donuts {
-  padding: 0 auto;
+ul {
+  list-style: none;
+
+  li {
+    list-style-type: none;
+    color: blue;
+  }
 }
 
 article {
@@ -107,23 +130,6 @@ article {
   }
 }
 
-form {
-  padding: 5px;
-  margin: 0 auto;
-  border: solid 1px black;
-  border-radius: 5px;
-
-  label {
-    font-size: 1.5rem;
-
-    input {
-      height: 2rem;
-      border: solid 3px blue;
-      margin-bottom: 1rem;
-    }
-  }
-}
-
 aside {
   border: solid 1px black;
   border-radius: 10px;
@@ -153,7 +159,7 @@ aside {
       display: inline-block;
       width: 30%;
     }
-    
+
     #sumContainer {
       margin-top: 20px;
       display: flex;
@@ -171,5 +177,4 @@ aside {
 
 #paymentWindow {
   padding: 5px;
-  border: solid 3px black;
 }
