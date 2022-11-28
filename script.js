@@ -118,25 +118,56 @@ function renderDonuts() {
     const drawFilledStar = filledStarIcon.repeat(donuts[i].rating);
     const drawHollowStar = emptyStarIcon.repeat(maxRating - donuts[i].rating);
     const total = donuts[i].amount * donuts[i].price;
-    const image = document.createElement('img');
-    image.setAttribute('src', `img/${donuts[i].name}.webp`);
-    donutContainer.appendChild(image);
-    donutContainer.innerHTML += 
-    `
-      <article>
 
-        <div class="donutContainer">
-          <h3>${donuts[i].name} - ${donuts[i].price}kr</h3>
-          <span class="amount">${donuts[i].amount} st</span><br>
-          <span class="price">${total}kr</span>
-          <button class="remove" data-id="${i}">-</button>
-          <button class="add" data-id="${i}">+</button><br>
-          <div class="rating">
-            ${drawFilledStar}${drawHollowStar}
-          </div>
-        </div>
-      </article>
-    `;
+    // create elements
+    const articleEl = document.createElement('article');
+    const imageEl = document.createElement('img');
+    imageEl.setAttribute('src', `img/${donuts[i].name}.webp`);
+    imageEl.setAttribute('alt', `Bild på en ${donuts[i].name}munk.`)
+    imageEl.setAttribute('height', '250');
+    imageEl.setAttribute('width', '250');
+    const infoEl = document.createElement('div');
+    infoEl.className = 'donutContainer';
+    infoEl.innerHTML = 
+    `
+      <h3>${donuts[i].name} - ${donuts[i].price}kr</h3>
+      <span class="amount">${donuts[i].amount} st</span><br>
+      <span class="price">${total}kr</span>
+      <button class="remove" data-id="${i}">-</button>
+      <button class="add" data-id="${i}">+</button><br>
+      <div class="rating">
+        ${drawFilledStar}${drawHollowStar}
+      </div>
+    `
+
+    // append elements
+    donutContainer.appendChild(articleEl);
+    articleEl.appendChild(imageEl);
+    articleEl.appendChild(infoEl);
+
+
+
+    // donutContainer.innerHTML += 
+    // `
+    //   <article>
+    //     <img src="/img/${donuts[i].name}.jpg"
+    //     alt="Bild på en ${donuts[i].name}munk."
+    //     width="250"
+    //     height="250"
+    //     />
+    //     <div class="donutContainer">
+    //       <h3>${donuts[i].name} - ${donuts[i].price}kr</h3>
+    //       <span class="amount">${donuts[i].amount} st</span><br>
+    //       <span class="price">${total}kr</span>
+    //       <button class="remove" data-id="${i}">-</button>
+    //       <button class="add" data-id="${i}">+</button><br>
+    //       <div class="rating">
+    //         ${drawFilledStar}${drawHollowStar}
+    //       </div>
+    //     </div>
+    //   </article>
+    // `;
+
   }
 
   // add donuts
