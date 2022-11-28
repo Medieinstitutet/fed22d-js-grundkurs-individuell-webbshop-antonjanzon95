@@ -38,6 +38,7 @@
     </main>
 
     <aside id="cartContainer">
+      <span id="countdown"></span>
       <h2>Varukorg</h2>
       <span class="cartTitle">Namn</span>
       <span class="cartTitle">Antal</span>
@@ -102,27 +103,29 @@
         ><br />
 
         Välj betalsätt:<br />
-        <input
+     
+        <label>
+          <input
           type="radio"
-          id="debitCard"
           name="paymentOption"
           value="debitCard"
-        />
-        <label for="debitCard">Kort</label><br />
+          />
+          Kort
+        </label><br />
 
         <input type="radio" id="invoice" name="paymentOption" value="invoice" />
         <label for="invoice">Faktura</label>
 
         <div id="paymentWindow"></div>
 
-        <input
+        
+        <label>
+          <input
           type="checkbox"
-          id="consentPersonalInfo"
           value="consentPersonalInfo"
-        />
-        <label for="consentPersonalInfo"
-          >Godkännande av behandling av personuppgifter</label
-        ><br />
+          />
+          Godkännande av behandling av personuppgifter
+        </label><br />
 
         <input
           type="checkbox"

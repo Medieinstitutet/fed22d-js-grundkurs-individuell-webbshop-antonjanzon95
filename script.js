@@ -15,6 +15,7 @@ const paymentOptions = document.querySelectorAll('input[name="paymentOption"]');
 const orderButton = document.querySelector('#orderButton');
 const checkoutForm = document.querySelector('#checkoutForm');
 const addedMessage = document.querySelector('#addedMessage');
+const countDownEl = document.querySelector('#countdown');
 
 // form validation variables
 const firstName = document.querySelector('#firstName');
@@ -25,8 +26,9 @@ const locality = document.querySelector('#locality');
 const doorCode = document.querySelector('#doorCode');
 const phoneNumber = document.querySelector('#phoneNumber');
 const email = document.querySelector('#email');
+const socialSecNum = document.querySelector('#socialSecNum');
 
-const letters = /^[A-Za-zÅÄÖåäö-]+$/;
+const nameRegEx = /^[A-Za-zÅÄÖåäö-]+$/;
 let firstNameIsOk = false;
 let lastNameIsOk = false;
 let addressIsOk = false;
@@ -37,6 +39,17 @@ let emailIsOk = false;
 let debitCardNumberIsOk = false;
 let socialSecNumIsOk = false;
 let selectedPaymentOption;
+
+// dates
+const today = new Date();
+
+const mondayBeforeTen = Date()
+
+// timer
+const startingMinutes = 15;
+let time = startingMinutes * 60;
+const timerInterval = setInterval(countTimer, 1000);
+
 
 // array of all donuts
 const donuts = [
@@ -177,6 +190,7 @@ function renderDonuts() {
     renderDonuts();
     showAddedMessage();
     animateSum();
+    startTimer();
   }
 
   // remove donuts
@@ -186,6 +200,7 @@ function renderDonuts() {
       donuts[clickedDonut].amount -= 1;
     }
     renderDonuts();
+    startTimer();
   }
 
   // add event listeners to each button
@@ -234,6 +249,7 @@ function renderCart() {
     renderDonuts();
     showAddedMessage();
     animateSum();
+    startTimer();
   }
 
   // remove donuts
@@ -244,6 +260,7 @@ function renderCart() {
     }
     renderCart();
     renderDonuts();
+    startTimer();
   }
 
   // add event listeners to each button
@@ -254,7 +271,37 @@ function renderCart() {
   document.querySelectorAll('.removeCart').forEach((btn) => {
     btn.addEventListener('click', removeDonut);
   });
+
 }
+
+// start timer from 15 minutes every time a donut is added to cart
+function startTimer() {
+  time = startingMinutes * 60;
+  countTimer();
+}
+
+// count down the timer and reset form and cart if more than 15 minutes passed
+function countTimer() {
+  countDownEl.style.color = 'inherit';
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+
+  if (seconds < 10) {
+    seconds = '0' + seconds;
+  }
+
+  countDownEl.innerHTML = `${minutes}:${seconds}`;
+
+  time--;
+
+  if (time < 60) {
+    countDownEl.style.color = 'red';
+  } else if (time < 0) {
+    clearOrder();
+    clearInterval(timerInterval);
+  }
+}
+
 
 // animate sum when updated
 function animateSum() {
@@ -319,13 +366,13 @@ function activateSubmitButton() {
 
 // first name
 function checkFirstName() {
-  if (firstName.value.match(letters)) {
+  if (firstName.value.match(nameRegEx)) {
     document.querySelector('#errorFirstName').innerHTML = ``;
-    firstName.style.border = 'solid 3px blue';
+    firstName.style.border = 'solid 1px black';
     firstNameIsOk = true;
   } else {
     document.querySelector('#errorFirstName').innerHTML = `Vänligen fyll i ett giltigt förnamn.`;
-    firstName.style.border = 'solid 3px red';
+    firstName.style.border = 'solid 1px red';
     firstNameIsOk = false;
   }
   activateSubmitButton();
@@ -333,13 +380,13 @@ function checkFirstName() {
 
 // last name
 function checkLastName() {
-  if (lastName.value.match(letters)) {
+  if (lastName.value.match(nameRegEx)) {
     document.querySelector('#errorLastName').innerHTML = ``;
-    lastName.style.border = 'solid 3px blue';
+    lastName.style.border = 'solid 1px black';
     lastNameIsOk = true;
   } else {
     document.querySelector('#errorLastName').innerHTML = `Vänligen fyll i ett giltigt efternamn.`;
-    lastName.style.border = 'solid 3px red';
+    lastName.style.border = 'solid 1px red';
     lastNameIsOk = false;
   }
   activateSubmitButton();
@@ -350,11 +397,11 @@ function checkAddress() {
   const addressRegEx = /^[A-Za-zÅÄÖåäö\s0-9]+$/;
   if (address.value.match(addressRegEx)) {
     document.querySelector('#errorAddress').innerHTML = ``;
-    address.style.border = 'solid 3px blue';
+    address.style.border = 'solid 1px black';
     addressIsOk = true;
   } else {
     document.querySelector('#errorAddress').innerHTML = `Vänligen fyll i en giltig adress.`;
-    address.style.border = 'solid 3px red';
+    address.style.border = 'solid 1px red';
     addressIsOk = false;
   }
   activateSubmitButton();
@@ -365,11 +412,11 @@ function checkPostalCode() {
   const postalCodeRegEx = /^[0-9\s-]+$/;
   if (postalCode.value.match(postalCodeRegEx) && postalCode.value.length == 5) {
     document.querySelector('#errorPostalCode').innerHTML = ``;
-    postalCode.style.border = 'solid 3px blue';
+    postalCode.style.border = 'solid 1px black';
     postalCodeIsOk = true;
   } else {
     document.querySelector('#errorPostalCode').innerHTML = `Vänligen fyll i ett giltigt postnummer (5 siffror).`;
-    postalCode.style.border = 'solid 3px red';
+    postalCode.style.border = 'solid 1px red';
     postalCodeIsOk = false;
   }
   activateSubmitButton();
@@ -380,11 +427,11 @@ function checkLocality() {
   const lettersSpace = /^[A-Za-zÅÄÖåäö\s]+$/;
   if (locality.value.match(lettersSpace)) {
     document.querySelector('#errorLocality').innerHTML = ``;
-    locality.style.border = 'solid 3px blue';
+    locality.style.border = 'solid 1px black';
     localityIsOk = true;
   } else {
     document.querySelector('#errorLocality').innerHTML = `Vänligen fyll i en giltig ort. (Endast bokstäver)`;
-    locality.style.border = 'solid 3px red';
+    locality.style.border = 'solid 1px red';
     localityIsOk = false;
   }
   activateSubmitButton();
@@ -395,11 +442,11 @@ function checkPhoneNumber() {
   const phoneRegEx = /^07([0-9][ -]*){7}[0-9]$/;
   if (phoneNumber.value.match(phoneRegEx)) {
     document.querySelector('#errorPhoneNumber').innerHTML = ``;
-    phoneNumber.style.border = 'solid 3px blue';
+    phoneNumber.style.border = 'solid 1px black';
     phoneNumberIsOk = true;
   } else {
     document.querySelector('#errorPhoneNumber').innerHTML = `Vänligen fyll i ett giltigt mobiltelefonnummer. (10 siffror)`;
-    phoneNumber.style.border = 'solid 3px red';
+    phoneNumber.style.border = 'solid 1px red';
     phoneNumberIsOk = false;
   }
   activateSubmitButton();
@@ -410,11 +457,11 @@ function checkEmail() {
   const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (email.value.match(emailRegEx)) {
     document.querySelector('#errorEmail').innerHTML = ``;
-    email.style.border = 'solid 3px blue';
+    email.style.border = 'solid 1px black';
     emailIsOk = true;
   } else {
     document.querySelector('#errorEmail').innerHTML = `Vänligen fyll i en giltig e-postadress.`;
-    email.style.border = 'solid 3px red';
+    email.style.border = 'solid 1px red';
     emailIsOk = false;
   }
   activateSubmitButton();
@@ -467,31 +514,33 @@ function renderPaymentWindow() {
       </label><br>
       <label>
         CVV<br />
-        <input type="number" id="debitCardCVV"> 
+        <input type="number" id="debitCardCVV"><br />
+      </label>
+      <label>
+        Namn på kortinnehavare:<br />
+        <input type="text" id="debitCardOwner">
       </label>
     `;
   } else if (selectedPaymentOption == 'invoice') {
     paymentWindow.innerHTML = 
     `
       <label>
-        Personnummer:
+        Personnummer:<br />
         <span id="errorSocSecNum"></span>
         <input type="number" id="socialSecNum">
       </label>
     `;
-
-    const socialSecNum = document.querySelector('#socialSecNum');
 
     // check social security number
     function checkSocSecNum() {
       const socSecRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/g;
       if (socialSecNum.value.match(socSecRegEx)) {
         document.querySelector('#errorSocSecNum').innerHTML = ``;
-        socialSecNum.style.border = 'solid 3px blue';
+        socialSecNum.style.border = 'solid 1px black';
         socialSecNumIsOk = true;
       } else {
         document.querySelector('#errorSocSecNum').innerHTML = `Vänligen fyll i ett giltigt personnummer. (10 eller 12 siffror)`;
-        socialSecNum.style.border = 'solid 3px red';
+        socialSecNum.style.border = 'solid 1px red';
         socialSecNumIsOk = false;
       }
     }

@@ -40,13 +40,14 @@ form {
   border-radius: 5px;  
 
   .formInputLabel {
-    width: 280px;
+    width: 300px;
     display: block;
     margin: 0 auto;
 
     input {
       height: 2rem;
       width: 100%;
+      border: solid 1px black;
     }
 
     span {
@@ -146,10 +147,18 @@ article {
 }
 
 aside {
+  position: relative;
   border: solid 1px black;
   border-radius: 10px;
   margin: 10px;
   padding: 5px;
+
+  #countdown {
+    font-weight: bold;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
 
   .cartTitle {
     margin: 3px;
@@ -159,6 +168,7 @@ aside {
   }
 
   #cart {
+
     .addCart, .removeCart {
       background-color: black;
       opacity: 0.8;
