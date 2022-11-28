@@ -190,7 +190,6 @@ function renderDonuts() {
     renderDonuts();
     showAddedMessage();
     animateSum();
-    startTimer();
   }
 
   // remove donuts
@@ -200,7 +199,7 @@ function renderDonuts() {
       donuts[clickedDonut].amount -= 1;
     }
     renderDonuts();
-    startTimer();
+    animateSum();
   }
 
   // add event listeners to each button
@@ -249,7 +248,6 @@ function renderCart() {
     renderDonuts();
     showAddedMessage();
     animateSum();
-    startTimer();
   }
 
   // remove donuts
@@ -260,7 +258,7 @@ function renderCart() {
     }
     renderCart();
     renderDonuts();
-    startTimer();
+    animateSum();
   }
 
   // add event listeners to each button
@@ -272,6 +270,7 @@ function renderCart() {
     btn.addEventListener('click', removeDonut);
   });
 
+  startTimer();
 }
 
 // start timer from 15 minutes every time a donut is added to cart
@@ -350,6 +349,7 @@ function sortDonuts() {
 
 // activate submit button
 function activateSubmitButton() {
+  startTimer();
   if (firstNameIsOk
     && lastNameIsOk
     && addressIsOk
