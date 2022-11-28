@@ -121,7 +121,7 @@ function renderDonuts() {
     donutContainer.innerHTML += 
     `
       <article>
-        <img src="/img/${donuts[i].name}.webp"
+        <img src="/img/${donuts[i].name}.jpg"
         alt="Bild på en ${donuts[i].name}munk."
         width="250"
         height="250"
@@ -146,6 +146,7 @@ function renderDonuts() {
     donuts[clickedDonut].amount += 1;
     renderDonuts();
     showAddedMessage();
+    animateSum();
   }
 
   // remove donuts
@@ -202,6 +203,7 @@ function renderCart() {
     renderCart();
     renderDonuts();
     showAddedMessage();
+    animateSum();
   }
 
   // remove donuts
@@ -224,17 +226,27 @@ function renderCart() {
   });
 }
 
+// animate sum when updated
+function animateSum() {
+  sum.style.color = 'blue';
+  sum.style.scale = '1.05'
+  setTimeout(removeAnimation, 200);
+}
+
+function removeAnimation() {
+  sum.style.color = 'inherit';
+  sum.style.scale = '1.0';
+}
+
 // show message for 2 seconds when donut is added to cart
 function showAddedMessage() {
   addedMessage.style.display = 'block';
-  addedMessage.innerHTML = `<span>Munken har lagts till i varukorgen.</span>`
   setTimeout(clearMessage, 2000);
 }
 
 // clear the "added-message"
 function clearMessage() {
   addedMessage.style.display = 'none';
-  addedMessage.innerHTML = ``;
 }
 
 // sort donuts
@@ -461,9 +473,11 @@ function renderPaymentWindow() {
 
 // render confirmation window
 function renderConfirmationWindow() {
+  confirmationWindow.style.display = 'block';
   confirmationWindow.innerHTML = 
   `
-    Du har beställt:
+    <button id="closeWindow"><i class='fa fa-close'></i></button>
+    <h2>Din beställning</h2>
     <ul>
   `;
   
@@ -474,8 +488,10 @@ function renderConfirmationWindow() {
   }
 
   for (let i = 0; i < orderedDonuts.length; i++) {
-    if (orderedDonuts[i].amount > 0) {
-      confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}</li>`;
+    if (orderedDonuts[i].amount === 1) {
+      confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}-munk.</li>`;
+    } else if (orderedDonuts[i].amount > 1) {
+      confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}-munkar.</li>`;
     }
   }
 
@@ -483,7 +499,14 @@ function renderConfirmationWindow() {
   `
     </ul>
 
+    Uppskattad leveranstid: 2 dagar.
   `;
+
+  function closeConfirmationWindow() {
+    confirmationWindow.style.display = 'none';
+  }
+
+  document.querySelector('#closeWindow').addEventListener('click', closeConfirmationWindow);
 }
 
 // clear checkout form

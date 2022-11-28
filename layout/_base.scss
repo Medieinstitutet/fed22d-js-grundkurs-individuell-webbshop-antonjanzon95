@@ -73,14 +73,6 @@ form {
   }
 }
 
-ul {
-  list-style: none;
-  
-  li {
-    list-style-type: none;
-  }
-}
-
 article {
   max-width: 350px;
   margin: 30px auto;
@@ -147,6 +139,10 @@ article {
   }
 }
 
+.wrapper {
+  position: relative;
+}
+
 aside {
   border: solid 1px black;
   border-radius: 10px;
@@ -183,6 +179,7 @@ aside {
       justify-content: end;
       #sum {
         font-weight: bold;
+        transition: 0.2s ease-in-out;
       }
     }
   }
@@ -194,4 +191,38 @@ aside {
 
 #paymentWindow {
   padding: 5px;
+}
+
+#confirmationWindow {
+  display: none;
+  position: fixed;
+  width: 80vw;
+  height: 80vh;
+  left: calc(50% - 40vw);
+  top: calc(50% - 40vh);
+  background-color: gray;
+  border: solid 2px black;
+  
+  button {
+    padding: 0;
+    margin: 0;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: none;
+    position: absolute;
+    font-size: 2rem;
+    text-align: center;
+    right: 5px;
+  }
+
+  ul {
+    display: block;
+    list-style: none;
+    margin-bottom: 20px;
+  
+    li {
+      list-style-type: none;
+    }
+  }
 }
