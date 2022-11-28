@@ -118,14 +118,13 @@ function renderDonuts() {
     const drawFilledStar = filledStarIcon.repeat(donuts[i].rating);
     const drawHollowStar = emptyStarIcon.repeat(maxRating - donuts[i].rating);
     const total = donuts[i].amount * donuts[i].price;
+    const image = document.createElement('img');
+    image.setAttribute('src', `img/${donuts[i].name}.webp`);
+    donutContainer.appendChild(image);
     donutContainer.innerHTML += 
     `
       <article>
-        <img src="/img/${donuts[i].name}.jpg"
-        alt="Bild på en ${donuts[i].name}munk."
-        width="250"
-        height="250"
-        />
+
         <div class="donutContainer">
           <h3>${donuts[i].name} - ${donuts[i].price}kr</h3>
           <span class="amount">${donuts[i].amount} st</span><br>
