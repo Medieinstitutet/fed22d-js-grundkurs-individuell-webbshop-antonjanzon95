@@ -10,21 +10,9 @@ article {
   width: 350px;
 }
 
-main {
-  text-align: center;
-}
-
-aside {
-  position: relative;
-  max-width: 600px;
+#cartContainer {
+  min-width: 500px;
   min-height: 300px;
-
-  #sum {
-    text-align: right;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-  }
 }
 
 form {

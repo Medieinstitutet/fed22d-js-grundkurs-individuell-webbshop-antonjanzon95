@@ -16,6 +16,9 @@ const orderButton = document.querySelector('#orderButton');
 const checkoutForm = document.querySelector('#checkoutForm');
 const addedMessage = document.querySelector('#addedMessage');
 const countDownEl = document.querySelector('#countdown');
+const cartFooter = document.querySelector('#cartFooter');
+const donutsWrapper = document.querySelector('main');
+const toggleCartBtn = document.querySelector('#toggleCartBtn')
 
 // form validation variables
 const firstName = document.querySelector('#firstName');
@@ -26,7 +29,6 @@ const locality = document.querySelector('#locality');
 const doorCode = document.querySelector('#doorCode');
 const phoneNumber = document.querySelector('#phoneNumber');
 const email = document.querySelector('#email');
-const socialSecNum = document.querySelector('#socialSecNum');
 
 const nameRegEx = /^[A-Za-zÅÄÖåäö-]+$/;
 let firstNameIsOk = false;
@@ -115,8 +117,6 @@ const donuts = [
   },
 ];
 
-let orderedDonuts = [];
-
 // **************************************************************************************************************
 // ---------------------------------------------- DECLARE FUNCTIONS ---------------------------------------------
 // **************************************************************************************************************
@@ -124,6 +124,7 @@ let orderedDonuts = [];
 // render all donuts
 function renderDonuts() {
   donutContainer.innerHTML = '';
+  
   for (let i = 0; i < donuts.length; i++) {
     const filledStarIcon = '<i class="fa fa-star"></i>';
     const emptyStarIcon = '<i class="fa fa-star-o"></i>';
@@ -135,11 +136,13 @@ function renderDonuts() {
     // create elements
     const articleEl = document.createElement('article');
     const imageEl = document.createElement('img');
+    const infoEl = document.createElement('div');
+
     imageEl.setAttribute('src', `img/${donuts[i].name}.webp`);
     imageEl.setAttribute('alt', `Bild på en ${donuts[i].name}munk.`)
     imageEl.setAttribute('height', '250');
     imageEl.setAttribute('width', '250');
-    const infoEl = document.createElement('div');
+
     infoEl.className = 'donutContainer';
     infoEl.innerHTML = 
     `
@@ -157,49 +160,6 @@ function renderDonuts() {
     donutContainer.appendChild(articleEl);
     articleEl.appendChild(imageEl);
     articleEl.appendChild(infoEl);
-
-
-
-    // donutContainer.innerHTML += 
-    // `
-    //   <article>
-    //     <img src="/img/${donuts[i].name}.jpg"
-    //     alt="Bild på en ${donuts[i].name}munk."
-    //     width="250"
-    //     height="250"
-    //     />
-    //     <div class="donutContainer">
-    //       <h3>${donuts[i].name} - ${donuts[i].price}kr</h3>
-    //       <span class="amount">${donuts[i].amount} st</span><br>
-    //       <span class="price">${total}kr</span>
-    //       <button class="remove" data-id="${i}">-</button>
-    //       <button class="add" data-id="${i}">+</button><br>
-    //       <div class="rating">
-    //         ${drawFilledStar}${drawHollowStar}
-    //       </div>
-    //     </div>
-    //   </article>
-    // `;
-
-  }
-
-  // add donuts
-  function addDonut(e) {
-    const clickedDonut = e.currentTarget.dataset.id;
-    donuts[clickedDonut].amount += 1;
-    renderDonuts();
-    showAddedMessage();
-    animateSum();
-  }
-
-  // remove donuts
-  function removeDonut(e) {
-    const clickedDonut = e.currentTarget.dataset.id;
-    if (donuts[clickedDonut].amount > 0) {
-      donuts[clickedDonut].amount -= 1;
-    }
-    renderDonuts();
-    animateSum();
   }
 
   // add event listeners to each button
@@ -214,51 +174,48 @@ function renderDonuts() {
   renderCart();
 }
 
+
+
+
 // render cart
 function renderCart() {
   cart.innerHTML = '';
+
   // calculate sum of all ordered donuts
   const sum = donuts.reduce(
     (previousValue, donut) => (donut.amount * donut.price) + previousValue,
     0,
-);
+  );
+
+  // shipping cost
+  const shipping = 25 + sum / 10;
+
+  // sum after shipping and special rules are added
+  const totalSum = sum + shipping;
+
+  cartFooter.innerHTML = 
+  `
+    <button id="backBtn">Tillbaka</button>
+    <button id="checkoutBtn">Till kassan</button>
+    <span id="sum">Totalt ${sum}kr</span>
+  `;
+
   for (let i = 0; i < donuts.length; i++) {
     if (donuts[i].amount > 0) {
       cart.innerHTML += 
       `
-        <span>${donuts[i].name}</span> 
-        <span><button class="removeCart" data-id="${i}">-</button> ${donuts[i].amount} <button class="addCart" data-id="${i}">+</button></span> 
-        <span>${donuts[i].price * donuts[i].amount}kr</span><br>
+        <span class="cartItem">${donuts[i].name}</span> 
+        <span class="cartItem"><button class="removeCart" data-id="${i}">-</button> ${donuts[i].amount} <button class="addCart" data-id="${i}">+</button></span> 
+        <span class="cartItem">${donuts[i].price * donuts[i].amount}kr</span><br>
+      `;
+      cartFooter.innerHTML = 
+      `
+        <button id="backBtn">Tillbaka</button>
+        <button id="checkoutBtn">Till kassan</button>
+        <span>Frakt: ${shipping}kr</span>
+        <span id="sum">Totalt: ${totalSum}kr</span>
       `;
     }
-  }
-
-  cart.innerHTML += 
-  `
-    <div id="sumContainer">
-      <span id="sum">Totalt ${sum}kr</span>
-    </div>
-  `;
-
-  // add donuts
-  function addDonut(e) {
-    const clickedDonut = e.currentTarget.dataset.id;
-    donuts[clickedDonut].amount += 1;
-    renderCart();
-    renderDonuts();
-    showAddedMessage();
-    animateSum();
-  }
-
-  // remove donuts
-  function removeDonut(e) {
-    const clickedDonut = e.currentTarget.dataset.id;
-    if (donuts[clickedDonut].amount > 0) {
-      donuts[clickedDonut].amount -= 1;
-    }
-    renderCart();
-    renderDonuts();
-    animateSum();
   }
 
   // add event listeners to each button
@@ -270,7 +227,60 @@ function renderCart() {
     btn.addEventListener('click', removeDonut);
   });
 
+  document.querySelector('#backBtn').style.display = 'none';
+
+  document.querySelector('#backBtn').addEventListener('click', showDonuts);
+
+  document.querySelector('#checkoutBtn').addEventListener('click', showCheckout);
+
   startTimer();
+}
+
+// hide donuts and go to checkout
+function showCheckout() {
+  donutsWrapper.style.display = 'none';
+
+  checkoutForm.style.display = 'block';
+
+  document.querySelector('#backBtn').style.display = 'block';
+  document.querySelector('#checkoutBtn').style.display = 'none';
+}
+
+// hide checkout and show donuts
+function showDonuts() {
+  donutsWrapper.style.display = 'block';
+
+  checkoutForm.style.display = 'none';
+
+  document.querySelector('#checkoutBtn').style.display = 'block';
+  document.querySelector('#backBtn').style.display = 'none';
+}
+
+function toggleCart () {
+  if (cartContainer.style.display === 'none') {
+    cartContainer.style.display = 'block';
+  } else {
+    cartContainer.style.display = 'none';
+  }
+}
+
+// add donuts
+function addDonut(e) {
+  const clickedDonut = e.currentTarget.dataset.id;
+  donuts[clickedDonut].amount += 1;
+  renderDonuts();
+  showAddedMessage();
+  animateSum();
+}
+
+// remove donuts
+function removeDonut(e) {
+  const clickedDonut = e.currentTarget.dataset.id;
+  if (donuts[clickedDonut].amount > 0) {
+    donuts[clickedDonut].amount -= 1;
+  }
+  renderDonuts();
+  animateSum();
 }
 
 // start timer from 15 minutes every time a donut is added to cart
@@ -531,6 +541,8 @@ function renderPaymentWindow() {
       </label>
     `;
 
+    const socialSecNum = document.querySelector('#socialSecNum');
+
     // check social security number
     function checkSocSecNum() {
       const socSecRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/g;
@@ -544,6 +556,7 @@ function renderPaymentWindow() {
         socialSecNumIsOk = false;
       }
     }
+
     socialSecNum.addEventListener('change', checkSocSecNum);
   }
 
@@ -553,18 +566,21 @@ function renderPaymentWindow() {
 // render confirmation window
 function renderConfirmationWindow() {
   confirmationWindow.style.display = 'block';
+
+  let orderedDonuts = [];
+
+  for (let i = 0; i < donuts.length; i++) {
+    if (donuts[i].amount > 0) {
+      orderedDonuts.push(donuts[i]);
+    }
+  }
+
   confirmationWindow.innerHTML = 
   `
     <button id="closeWindow"><i class='fa fa-close'></i></button>
     <h2>Din beställning</h2>
     <ul>
   `;
-  
-  for (let i = 0; i < donuts.length; i++) {
-    if (donuts[i].amount > 0) {
-      orderedDonuts.push(donuts[i]);
-    }
-  }
 
   for (let i = 0; i < orderedDonuts.length; i++) {
     if (orderedDonuts[i].amount === 1) {
@@ -593,8 +609,9 @@ function clearOrder() {
   for (let i = 0; i < donuts.length; i++) {
     donuts[i].amount = 0;
   }
-  renderDonuts();
-  renderCart();
+    renderDonuts();
+    renderCart();
+    showDonuts();
 }
 
 
@@ -610,6 +627,9 @@ postalCode.addEventListener('change', checkPostalCode);
 locality.addEventListener('change', checkLocality);
 phoneNumber.addEventListener('change', checkPhoneNumber);
 email.addEventListener('change', checkEmail);
+
+// toggle cart
+toggleCartBtn.addEventListener('click', toggleCart);
 
 // clear order button
 buttonClear.addEventListener('click', clearOrder);

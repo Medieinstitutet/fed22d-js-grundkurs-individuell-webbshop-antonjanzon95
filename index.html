@@ -19,10 +19,10 @@
 
     <header>
       <h1>Gottfrids Munkar</h1>
-      <a href="#cartContainer"><i class="fa-solid fa-cart-shopping" style="font-size: 2rem; color:black;"></i></a>
+      <button id="toggleCartBtn"><i class="fa-solid fa-cart-shopping"></i></button>
     </header>
 
-    <main class="wrapper">
+    <main>
       <h2>Munksortiment</h2>
       <p>Sortera enligt:</p>
       <select name="sortName" id="sortBy">
@@ -44,11 +44,12 @@
       <span class="cartTitle">Antal</span>
       <span class="cartTitle">Pris</span>
       <div id="cart"></div>
+      <div id="cartFooter"></div>
     </aside>
 
     <div id="addedMessage"><span>Munken har lagts till i varukorgen.</span></div>
 
-    <section class="wrapper">
+    <section>
       <form action="" id="checkoutForm">
         <label class="formInputLabel">
           Förnamn:<br />
