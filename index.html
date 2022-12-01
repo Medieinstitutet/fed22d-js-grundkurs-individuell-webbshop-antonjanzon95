@@ -19,20 +19,22 @@
 
     <header>
       <h1>Gottfrids Munkar</h1>
-      <button id="toggleCartBtn"><i class="fa-solid fa-cart-shopping"></i></button>
+      <button id="toggleCartBtn" aria-label="Växla visning av varukorgen"><i class="fa-solid fa-cart-shopping"></i></button>
     </header>
 
     <main>
-      <h2>Munksortiment</h2>
-      <p>Sortera enligt:</p>
-      <select name="sortName" id="sortBy">
-        <option value="none" selected disabled hidden>Sortera produkter</option>
-        <option value="nameDonut">Namn</option>
-        <option value="priceAsc">Pris stigande</option>
-        <option value="priceDesc">Pris fallande</option>
-        <option value="ratingAsc">Betyg stigande</option>
-        <option value="ratingDesc">Betyg fallande</option>
-      </select>
+      <div class="mainHeader">
+        <h2>Munksortiment</h2>
+        <p>Sortera enligt:</p>
+        <select name="sortName" id="sortBy">
+          <option value="none" selected disabled hidden>Sortera produkter</option>
+          <option value="nameDonut">Namn</option>
+          <option value="priceAsc">Pris stigande</option>
+          <option value="priceDesc">Pris fallande</option>
+          <option value="ratingAsc">Betyg stigande</option>
+          <option value="ratingDesc">Betyg fallande</option>
+        </select>
+      </div>
 
       <div id="donuts"></div>
     </main>
@@ -51,6 +53,7 @@
 
     <section>
       <form action="" id="checkoutForm">
+        <h2>Vänligen fyll i dina uppgifter</h2>
         <label class="formInputLabel">
           Förnamn:<br />
           <input type="text" id="firstName" /> <br />
@@ -103,52 +106,68 @@
           <input type="text" id="discountCode" /> </label
         ><br />
 
-        Välj betalsätt:<br />
-     
-        <label>
-          <input
-          type="radio"
-          name="paymentOption"
-          value="debitCard"
-          />
-          Kort
-        </label><br />
+        <div class="margin">
+          <span>Välj betalsätt:</span>
+      
+          <label>
+            <input
+            type="radio"
+            name="paymentOption"
+            value="debitCard"
+            />
+            Kort
+          </label>
 
-        <input type="radio" id="invoice" name="paymentOption" value="invoice" />
-        <label for="invoice">Faktura</label>
+          <label>
+            <input type="radio" id="invoice" name="paymentOption" value="invoice" />
+            Faktura
+          </label>
 
-        <div id="paymentWindow"></div>
+          <div id="paymentWindow"></div>
 
-        
-        <label>
-          <input
-          type="checkbox"
-          value="consentPersonalInfo"
-          />
-          Godkännande av behandling av personuppgifter
-        </label><br />
+          
+          <label>
+            <input
+            type="checkbox"
+            value="consentPersonalInfo"
+            />
+            Godkännande av behandling av personuppgifter
+          </label>
 
-        <input
-          type="checkbox"
-          id="subscribeNewsletter"
-          value="subscribeNewsletter"
-          checked
-        />
-        <label for="subscribeNewsletter">Prenumerera på vårt nyhetsbrev</label
-        ><br />
+          <label>
+            <input
+              type="checkbox"
+              id="subscribeNewsletter"
+              value="subscribeNewsletter"
+              checked
+            />
+          Prenumerera på vårt nyhetsbrev
+          </label>
 
-        <!--ta bort type="reset" här (bara lagt till för att knappen annars reloadar hela sidan)-->
-        <button id="orderButton" aria-label="Confirm order" type="reset">
-          Beställ nu
-        </button>
+          <div class="split">
+            <!--ta bort type="reset" här (bara lagt till för att knappen annars reloadar hela sidan)-->
+            <button id="orderButton" aria-label="Lägg beställning" type="reset">
+              Beställ nu
+            </button>
 
-        <button id="clearOrder" aria-label="Clear order" type="reset">
-          Rensa beställning
-        </button>
+            <button id="clearOrder" aria-label="Rensa beställning" type="reset">
+              Rensa beställning
+            </button>
+          </div>
+        </div>
       </form>
 
       <div id="confirmationWindow"></div>
     </section>
+
+    <footer>
+      <span>Följ våra sociala medier!</span>
+      <div>
+        <i class='fa fa-instagram'></i>
+        <i class='fa fa-facebook-square'></i>
+      </div>
+      <span id="devs">Justin Thyme AB</span>
+    </footer>
 
     <script src="script.js"></script>
   </body>

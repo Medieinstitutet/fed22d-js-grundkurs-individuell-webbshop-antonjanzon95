@@ -18,7 +18,9 @@ const addedMessage = document.querySelector('#addedMessage');
 const countDownEl = document.querySelector('#countdown');
 const cartFooter = document.querySelector('#cartFooter');
 const donutsWrapper = document.querySelector('main');
-const toggleCartBtn = document.querySelector('#toggleCartBtn')
+const toggleCartBtn = document.querySelector('#toggleCartBtn');
+const cartContainer = document.querySelector('#cartContainer');
+const invoiceCheckBox = document.querySelector('#invoice');
 
 // form validation variables
 const firstName = document.querySelector('#firstName');
@@ -149,8 +151,8 @@ function renderDonuts() {
       <h3>${donuts[i].name} - ${donuts[i].price}kr</h3>
       <span class="amount">${donuts[i].amount} st</span><br>
       <span class="price">${total}kr</span>
-      <button class="remove" data-id="${i}">-</button>
-      <button class="add" data-id="${i}">+</button><br>
+      <button class="remove" data-id="${i}" aria-label="Ta bort munk">-</button>
+      <button class="add" data-id="${i}" aria-label="Lägg till munk">+</button><br>
       <div class="rating">
         ${drawFilledStar}${drawHollowStar}
       </div>
@@ -174,9 +176,6 @@ function renderDonuts() {
   renderCart();
 }
 
-
-
-
 // render cart
 function renderCart() {
   cart.innerHTML = '';
@@ -188,34 +187,80 @@ function renderCart() {
   );
 
   // shipping cost
-  const shipping = 25 + sum / 10;
+  let shipping = 25 + sum / 10;
 
-  // sum after shipping and special rules are added
-  const totalSum = sum + shipping;
+  // total sum and donut amount
+  let totalSum;
+  let totalDonutsAmount = 0;
 
   cartFooter.innerHTML = 
   `
-    <button id="backBtn">Tillbaka</button>
-    <button id="checkoutBtn">Till kassan</button>
-    <span id="sum">Totalt ${sum}kr</span>
+    <button id="backBtn" aria-label="Gå tillbaka till föregående sida">Tillbaka</button>
+    <button id="checkoutBtn" aria-label="Gå till kassan">Till kassan</button>
+    <span id="sum">Totalt 0kr</span>
   `;
+
+  // sum after shipping and special rules are added
+  const currentDate = new Date();
+  let day = currentDate.getDay();
+  let hour = currentDate.getHours();
 
   for (let i = 0; i < donuts.length; i++) {
     if (donuts[i].amount > 0) {
+
+      // increment total donuts with each added donut
+      totalDonutsAmount += donuts[i].amount;
+
+      if (totalDonutsAmount >= 15) {
+        shipping = 0;
+      }
+
+      totalSum = sum + shipping;
+
+      // special rules for days
+      switch(true) {
+        case (day === 1 && hour <= 3):
+          totalSum = totalSum * 1.15 * 0.9;
+          break;
+        case (day === 1 && hour < 10):
+          totalSum = totalSum * 0.9;
+          break;
+        case ((day === 5 && hour > 15) || (day === 6) || (day === 0)):
+          totalSum = (sum * 1.15) + shipping;
+          break;
+      }
+      
+      // render cart
       cart.innerHTML += 
       `
         <span class="cartItem">${donuts[i].name}</span> 
-        <span class="cartItem"><button class="removeCart" data-id="${i}">-</button> ${donuts[i].amount} <button class="addCart" data-id="${i}">+</button></span> 
+        <span class="cartItem"><button class="removeCart" data-id="${i}" aria-label="Ta bort en ${donuts[i].name}-munk">-</button> 
+        ${donuts[i].amount} 
+        <button class="addCart" data-id="${i}" aria-label="Lägg till en ${donuts[i].name}-munk">+</button></span> 
         <span class="cartItem">${donuts[i].price * donuts[i].amount}kr</span><br>
       `;
+
       cartFooter.innerHTML = 
       `
-        <button id="backBtn">Tillbaka</button>
-        <button id="checkoutBtn">Till kassan</button>
-        <span>Frakt: ${shipping}kr</span>
+        <button id="backBtn" aria-label="Gå tillbaka">Tillbaka</button>
+        <button id="checkoutBtn" aria-label="Gå till kassan">Till kassan</button>
+        <span id="shipping">Frakt: ${shipping}kr</span>
         <span id="sum">Totalt: ${totalSum}kr</span>
       `;
+
+      if (day === 1 && hour > 10) {
+        cartFooter.innerHTML += `<span id="discount">Måndagsrabatt: 10 % på hela beställningen!</span>`;
+      }
     }
+  }
+  
+
+
+  // disable invoice payment choice if total sum is more than 800
+  if (totalSum > 800) {
+    invoiceCheckBox.setAttribute('disabled', '');
+  } else {
+      invoiceCheckBox.removeAttribute('disabled');
   }
 
   // add event listeners to each button
@@ -489,9 +534,9 @@ function renderPaymentWindow() {
     paymentWindow.innerHTML = 
     `
       <label>
-        Kortnummer<br />
+        <span>Kortnummer</span>
         <input type="number" id="debitCardNumber">
-      </label><br />
+      </label>
       <label>
         Utgångsdatum<br />
         <select id="debitCardExpMonth">
@@ -521,13 +566,13 @@ function renderPaymentWindow() {
         <option value="y28">28</option>
         <option value="y29">29</option>
         </select>
-      </label><br>
-      <label>
-        CVV<br />
-        <input type="number" id="debitCardCVV"><br />
       </label>
       <label>
-        Namn på kortinnehavare:<br />
+        <span>CVV</span>
+        <input type="number" id="debitCardCVV">
+      </label>
+      <label>
+        <span>Namn på kortinnehavare:</span>
         <input type="text" id="debitCardOwner">
       </label>
     `;
@@ -577,7 +622,7 @@ function renderConfirmationWindow() {
 
   confirmationWindow.innerHTML = 
   `
-    <button id="closeWindow"><i class='fa fa-close'></i></button>
+    <button id="closeWindow" aria-label="Stäng fönstret"><i class='fa fa-close'></i></button>
     <h2>Din beställning</h2>
     <ul>
   `;
