@@ -19,6 +19,10 @@ p {
   margin: 0;
 }
 
+i {
+  font-display: swap;
+}
+
 header {
   padding: 0px 15px;
   display: flex;
@@ -278,7 +282,7 @@ article {
   border-radius: 10px;
   padding: 5px;
   width: 95vw;
-  max-width: 400px;
+  max-width: 350px;
   z-index: 2;
   background-color: white;
   opacity: 0.95;
@@ -370,14 +374,17 @@ article {
 }
 
 #confirmationWindow {
+  padding: 5px;
   display: none;
   position: fixed;
   width: 80vw;
   height: 80vh;
   left: calc(50% - 40vw);
-  top: calc(50% - 40vh);
-  background-color: gray;
+  top: 100px;
+  background-color: white;
+  opacity: 0.95;
   border: solid 2px black;
+  box-shadow: 0px 0px 10px 5px;
   
   button {
     padding: 0;
