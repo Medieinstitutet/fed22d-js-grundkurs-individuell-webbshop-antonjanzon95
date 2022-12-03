@@ -459,9 +459,21 @@ function checkInput(input, inputRegEx, inputIsOk, errorInput) {
   activateSubmitButton();
 }
 
+function handleInputChange(e) {
+  switch (e.currentTarget.id) {
+    case 'firstName':
+      checkInput(firstName, nameRegEx, firstNameIsOk, errorFirstName);
+      break;
+    case 'lastName':
+      // TODO: Anropa checkInput med rätt paramterar/variabler
+      break;
+    default:
+      console.error('Unknown input field ID.');
+  }
+}
 
 // ska man göra såhär?
-firstName.addEventListener('change', checkInput(firstName, nameRegEx, firstNameIsOk, errorFirstName));
+firstName.addEventListener('change', handleInputChange);
 
 // *********************** DETTA FUNGERAR INTE *************************** //
 // *********************** DETTA FUNGERAR INTE *************************** //
