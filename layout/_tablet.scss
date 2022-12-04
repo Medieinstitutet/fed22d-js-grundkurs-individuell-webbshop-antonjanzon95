@@ -1,0 +1,14 @@
+#donuts {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+main {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+
+#cartContainer {
+    max-width: 450px;
+}

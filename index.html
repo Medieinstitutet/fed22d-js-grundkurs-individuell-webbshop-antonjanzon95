@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gottfrids Munkar</title>
+
+  <meta name="description"
+    content="Gottfrids munkar har sedan tidigt 80-tal givit otaliga smaklökar en helt unik upplevelse av glädje. Munkar i världsklass, helt enkelt.">
+
+  <meta property="og:title" content="Gottfrids Munkar">
+  <meta property="og:url"
+    content="https://medieinstitutet.github.io/fed22d-js-grundkurs-individuell-webbshop-antonjanzon95/">
+  <meta property="og:type" content="webshop">
+  <meta property="og:description"
+    content="Gottfrids munkar har sedan tidigt 80-tal givit otaliga smaklökar en helt unik upplevelse av glädje. Munkar i världsklass, helt enkelt.">
+
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
+
+<body>
+
+  <header>
+    <h1>Gottfrids Munkar</h1>
+    <button id="toggleCartBtn" aria-label="Växla visning av varukorgen">
+      <i class='fa fa-shopping-cart'></i>
+    </button>
+  </header>
+
+  <main>
+    <div class="mainHeader">
+      <h2>Munksortiment</h2>
+      <p>Sortera enligt:</p>
+      <select name="sortName" id="sortBy">
+        <option value="none" selected disabled hidden>Sortera produkter</option>
+        <option value="nameDonut">Namn</option>
+        <option value="priceAsc">Pris stigande</option>
+        <option value="priceDesc">Pris fallande</option>
+        <option value="ratingAsc">Betyg stigande</option>
+        <option value="ratingDesc">Betyg fallande</option>
+      </select>
+    </div>
+
+    <div id="donuts"></div>
+  </main>
+
+  <aside id="cartContainer">
+    <span id="countdown"></span>
+    <h2>Varukorg</h2>
+    <span class="cartTitle">Namn</span>
+    <span class="cartTitle">Antal</span>
+    <span class="cartTitle">Pris</span>
+    <div id="cart"></div>
+    <div id="cartFooter"></div>
+  </aside>
+
+  <div id="addedMessage"><span>Munken har lagts till i varukorgen.</span></div>
+
+  <section>
+    <form action="submit" id="checkoutForm">
+      <h2>Vänligen fyll i dina uppgifter</h2>
+      <label class="formInputLabel">
+        Förnamn:<br>
+        <input type="text" id="firstName"> <br>
+        <span id="errorFirstName"></span> </label><br>
+
+      <label class="formInputLabel">
+        Efternamn:<br>
+        <input type="text" id="lastName"> <br>
+        <span id="errorLastName"></span> </label><br>
+
+      <label class="formInputLabel">
+        Adress:<br>
+        <input type="text" id="address"> <br>
+        <span id="errorAddress"></span> </label><br>
+
+      <label class="formInputLabel">
+        Postnummer:<br>
+        <input type="number" id="postalCode"> <br>
+        <span id="errorPostalCode"></span> </label><br>
+
+      <label class="formInputLabel">
+        Postort:<br>
+        <input type="text" id="locality"> <br>
+        <span id="errorLocality"></span> </label><br>
+
+      <label class="formInputLabel">
+        Ev. portkod:<br>
+        <input type="number" id="doorCode"> </label><br>
+
+      <label class="formInputLabel">
+        Telefonnummer (mobil):<br>
+        <input type="number" id="phoneNumber"><br>
+        <span id="errorPhoneNumber"></span> </label><br>
+
+      <label class="formInputLabel">
+        E-postadress:<br>
+        <input type="text" id="email"><br>
+        <span id="errorEmail"></span> </label><br>
+
+      <label class="formInputLabel">
+        Har du en rabattkod?<br>
+        <input type="text" id="discountCode"> </label><br>
+
+      <div class="margin">
+        <span>Välj betalsätt:</span>
+
+        <label>
+          <input type="radio" name="paymentOption" value="debitCard">
+          Kort
+        </label>
+
+        <label>
+          <input type="radio" id="invoice" name="paymentOption" value="invoice">
+          Faktura
+        </label>
+
+        <div id="paymentWindow"></div>
+
+        <label>
+          <input type="checkbox" value="consentPersonalInfo">
+          Godkännande av behandling av personuppgifter
+        </label>
+
+        <label>
+          <input type="checkbox" id="subscribeNewsletter" value="subscribeNewsletter" checked>
+          Prenumerera på vårt nyhetsbrev
+        </label>
+
+        <div class="split">
+          <button id="orderButton" aria-label="Lägg beställning" disabled>
+            Beställ nu
+          </button>
+
+          <button id="clearOrder" aria-label="Rensa beställning" type="reset">
+            Rensa beställning
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div id="confirmationWindow"></div>
+  </section>
+
+  <footer>
+    <span>Följ våra sociala medier!</span>
+    <div>
+      <a href="http://www.instagram.com" target="_blank" aria-label="Gottfrids Munkars Instagram"><i
+          class='fa fa-instagram'></i></a>
+      <a href="http://www.facebook.com" target="_blank" aria-label="Gottfrids Munkars Facebook"><i
+          class='fa fa-facebook-square'></i></a>
+    </div>
+    <span id="devs">Justin Thyme AB</span>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>
