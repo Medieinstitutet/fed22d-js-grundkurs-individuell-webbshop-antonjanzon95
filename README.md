@@ -1,13 +1,27 @@
 # My Donut Webshop
 
-My small webshop project, including a products page, a shopping cart, and a validation form.
+My first webshop project, including a products page, a shopping cart, and a validation form.
 
 ## Acknowledgements
 
 - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
-- [Awesome README](https://github.com/matiassingers/awesome-readme)
-- [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
 - [JavaScript The Definitive Guide, 7th Edition](https://www.oreilly.com/library/view/javascript-the-definitive/9781491952016/)
+
+## Screenshots
+
+### App
+
+![App](https://user-images.githubusercontent.com/61318081/205492830-5a262c31-5d89-40e1-994e-dddc0298a673.png)
+
+### Validations
+
+![html-validation](https://user-images.githubusercontent.com/61318081/205492769-383270a2-85a9-4b25-97e0-acae2bb6a41d.png)
+
+![css-validation](https://user-images.githubusercontent.com/61318081/205492796-b3c1da51-e5fa-438d-b796-c31ca6857de2.png)
+
+### Lighthouse
+
+![lighthouse](https://user-images.githubusercontent.com/61318081/205492934-5567c653-a5c7-4a73-9185-789110158992.png)
 
 ## Authors
 
@@ -17,4 +31,8 @@ My small webshop project, including a products page, a shopping cart, and a vali
 
 **Client:** JavaScript, SCSS
 
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9237555&assignment_repo_type=AssignmentRepo)
+## 🔗 Links
+
+### Live version of project
+
+https://medieinstitutet.github.io/fed22d-js-grundkurs-individuell-webbshop-antonjanzon95/

@@ -22,8 +22,6 @@ const toggleCartBtn = document.querySelector('#toggleCartBtn');
 const cartContainer = document.querySelector('#cartContainer');
 const invoiceCheckBox = document.querySelector('#invoice');
 
-
-
 // form validation variables
 const firstName = document.querySelector('#firstName');
 const lastName = document.querySelector('#lastName');
@@ -44,10 +42,11 @@ const errorEmail = document.querySelector('#errorEmail');
 
 const nameRegEx = /^[A-Za-zÅÄÖåäö-]+$/;
 const addressRegEx = /^[A-Za-zÅÄÖåäö\s0-9]+$/;
-const postalCodeRegEx = /^[0-9\s-]+$/;
+const postalCodeRegEx = /\b\d{5}\b/g;
 const localityRegEx = /^[A-Za-zÅÄÖåäö\s]+$/;
 const phoneNumberRegEx = /^07([0-9][ -]*){7}[0-9]$/;
 const emailRegEx = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const socSecRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/g;
 
 let firstNameIsOk = false;
 let lastNameIsOk = false;
@@ -56,22 +55,18 @@ let postalCodeIsOk = false;
 let localityIsOk = false;
 let phoneNumberIsOk = false;
 let emailIsOk = false;
-let debitCardNumberIsOk = false;
 let socialSecNumIsOk = false;
 let selectedPaymentOption;
 
-console.log(firstName)
-
 // dates
-const today = new Date();
-
-const mondayBeforeTen = Date()
+const currentDate = new Date();
+let day = currentDate.getDay();
+let hour = currentDate.getHours();
 
 // timer
 const startingMinutes = 15;
 let time = startingMinutes * 60;
 const timerInterval = setInterval(countTimer, 1000);
-
 
 // array of all donuts
 const donuts = [
@@ -219,10 +214,6 @@ function renderCart() {
   `;
 
   // sum after shipping and special rules are added
-  const currentDate = new Date();
-  let day = currentDate.getDay();
-  let hour = currentDate.getHours();
-
   for (let i = 0; i < donuts.length; i++) {
     if (donuts[i].amount > 0) {
 
@@ -245,7 +236,7 @@ function renderCart() {
         case (day === 1 && hour < 10):
           totalSum = totalSum * 0.9;
           break;
-        // if friday after 15:00 - sunday (first rule also includes monday night <= 3 o'clock)
+        // if friday after 15:00 - sunday (increase price on each donut by 15% (first rule also includes monday night <= 3 o'clock))
         case ((day === 5 && hour > 15) || (day === 6) || (day === 0)):
           totalSum = (sum * 1.15) + shipping;
           break;
@@ -301,7 +292,7 @@ function renderCart() {
 // hide donuts and go to checkout
 function showCheckout() {
   donutsWrapper.style.display = 'none';
-
+  cartContainer.style.display = 'none';
   checkoutForm.style.display = 'block';
 
   document.querySelector('#backBtn').style.display = 'block';
@@ -311,13 +302,14 @@ function showCheckout() {
 // hide checkout and show donuts
 function showDonuts() {
   donutsWrapper.style.display = 'block';
-
+  cartContainer.style.display = 'none';
   checkoutForm.style.display = 'none';
 
   document.querySelector('#checkoutBtn').style.display = 'block';
   document.querySelector('#backBtn').style.display = 'none';
 }
 
+// toggle cart 
 function toggleCart () {
   if (cartContainer.style.display === 'none') {
     cartContainer.style.display = 'block';
@@ -366,6 +358,7 @@ function countTimer() {
 
   time--;
 
+  // set timer to red color when 1 minute is remaining
   if (time < 60) {
     countDownEl.style.color = 'red';
   } else if (time < 0) {
@@ -373,7 +366,6 @@ function countTimer() {
     clearInterval(timerInterval);
   }
 }
-
 
 // animate sum when updated
 function animateSum() {
@@ -423,169 +415,173 @@ function sortDonuts() {
 // activate submit button
 function activateSubmitButton() {
   startTimer();
-  // if (firstNameIsOk
-  //   && lastNameIsOk
-  //   && addressIsOk
-  //   && postalCodeIsOk
-  //   && localityIsOk
-  //   && phoneNumberIsOk
-  //   && emailIsOk
-  //   && (socialSecNumIsOk || selectedPaymentOption === 'debitCard')) {
-  if (firstNameIsOk) {
-    orderButton.removeAttribute('disabled');
+
+  if (firstNameIsOk
+    && lastNameIsOk
+    && addressIsOk
+    && postalCodeIsOk
+    && localityIsOk
+    && phoneNumberIsOk
+    && emailIsOk
+    && (socialSecNumIsOk || selectedPaymentOption === 'debitCard')) 
+    {
+      orderButton.style.opacity = '1';
+      orderButton.removeAttribute('disabled');
   } else {
-    orderButton.setAttribute('disabled', '');
+      orderButton.setAttribute('disabled', '');
+      orderButton.style.opacity = '0.5';
   }
 }
 
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
+/* 
+  Jag fick aldrig till detta, du får gärna förklara om du har tid någon gång! Jag lyckas få inputIsOk till true,
+  men sen när jag anropar funktionen i "handleInputChange" så är den false igen. 
+  Måste jag göra något annat för att göra den dynamisk som du pratade om?
+  Har testat gjort den till siffror, och testat använda return, men ändå vill den inte stanna som true efter "checkInput"-funktionen... 
+*/
 
-function checkInput(input, inputRegEx, inputIsOk, errorInput) {
-  if (input.value.match(inputRegEx)) {
-    errorInput.innerHTML = ``;
-    input.style.border = 'solid 1px black';
-    inputIsOk = true;
+// // check if input is valid
+// function checkInput(input, inputRegEx, errorInput) {
+//   let inputIsOk = false;
+//   if (input.value.match(inputRegEx)) {
+//     errorInput.innerHTML = ``;
+//     input.style.border = 'solid 2px green';
+//     return true;
+//   } else {
+//     errorInput.innerHTML = `Vänligen kontrollera fältet.`;
+//     input.style.border = 'solid 1px red';
+//     return false;
+//   }
+// }
+
+// // check all input cases
+// function handleInputChange(e) {
+//   switch (e.currentTarget.id) {
+//     case 'firstName':
+//       // test
+//       let firstNameIsOk = checkInput(firstName, nameRegEx, errorFirstName);
+//       break;
+//     case 'lastName':
+//       checkInput(lastName, nameRegEx, lastNameIsOk, errorLastName);
+//       break;
+//     case 'address':
+//       checkInput(address, addressRegEx, addressIsOk, errorAddress);
+//       break;
+//     case 'postalCode':
+//       checkInput(postalCode, postalCodeRegEx, postalCodeIsOk, errorPostalCode);
+//       break;
+//     case 'locality':
+//       checkInput(locality, localityRegEx, localityIsOk, errorLocality);
+//       break;
+//     case 'phoneNumber':
+//       checkInput(phoneNumber, phoneNumberRegEx, phoneNumberIsOk, errorPhoneNumber);
+//       break;
+//     case 'email':
+//       checkInput(email, emailRegEx, emailIsOk, errorEmail);
+//       break;
+//     default:
+//       console.error('Unknown input field ID.');
+//   }
+//   activateSubmitButton();
+// }
+
+// first name
+function checkFirstName() {
+  if (firstName.value.match(nameRegEx)) {
+    document.querySelector('#errorFirstName').innerHTML = ``;
+    firstName.style.border = 'solid 1px black';
+    firstNameIsOk = true;
   } else {
-    errorInput.innerHTML = `Vänligen kontrollera fältet.`;
-    input.style.border = 'solid 1px red';
-    inputIsOk = false;
+    document.querySelector('#errorFirstName').innerHTML = `Vänligen fyll i ett giltigt förnamn.`;
+    firstName.style.border = 'solid 1px red';
+    firstNameIsOk = false;
   }
   activateSubmitButton();
 }
 
-function handleInputChange(e) {
-  switch (e.currentTarget.id) {
-    case 'firstName':
-      checkInput(firstName, nameRegEx, firstNameIsOk, errorFirstName);
-      break;
-    case 'lastName':
-      // TODO: Anropa checkInput med rätt paramterar/variabler
-      break;
-    default:
-      console.error('Unknown input field ID.');
+// last name
+function checkLastName() {
+  if (lastName.value.match(nameRegEx)) {
+    document.querySelector('#errorLastName').innerHTML = ``;
+    lastName.style.border = 'solid 1px black';
+    lastNameIsOk = true;
+  } else {
+    document.querySelector('#errorLastName').innerHTML = `Vänligen fyll i ett giltigt efternamn.`;
+    lastName.style.border = 'solid 1px red';
+    lastNameIsOk = false;
   }
+  activateSubmitButton();
 }
 
-// ska man göra såhär?
-firstName.addEventListener('change', handleInputChange);
+// address
+function checkAddress() {
+  if (address.value.match(addressRegEx)) {
+    document.querySelector('#errorAddress').innerHTML = ``;
+    address.style.border = 'solid 1px black';
+    addressIsOk = true;
+  } else {
+    document.querySelector('#errorAddress').innerHTML = `Vänligen fyll i en giltig adress.`;
+    address.style.border = 'solid 1px red';
+    addressIsOk = false;
+  }
+  activateSubmitButton();
+}
 
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
-// *********************** DETTA FUNGERAR INTE *************************** //
+// postal code
+function checkPostalCode() {
+  if (postalCode.value.match(postalCodeRegEx)) {
+    document.querySelector('#errorPostalCode').innerHTML = ``;
+    postalCode.style.border = 'solid 1px black';
+    postalCodeIsOk = true;
+  } else {
+    document.querySelector('#errorPostalCode').innerHTML = `Vänligen fyll i ett giltigt postnummer (5 siffror).`;
+    postalCode.style.border = 'solid 1px red';
+    postalCodeIsOk = false;
+  }
+  activateSubmitButton();
+}
 
-checkInput(firstName, nameRegEx, firstNameIsOk, errorFirstName);
-console.log(firstNameIsOk);
+// locality
+function checkLocality() {
+  if (locality.value.match(localityRegEx)) {
+    document.querySelector('#errorLocality').innerHTML = ``;
+    locality.style.border = 'solid 1px black';
+    localityIsOk = true;
+  } else {
+    document.querySelector('#errorLocality').innerHTML = `Vänligen fyll i en giltig ort. (Endast bokstäver)`;
+    locality.style.border = 'solid 1px red';
+    localityIsOk = false;
+  }
+  activateSubmitButton();
+}
 
-// // first name
-// function checkFirstName() {
-//   if (firstName.value.match(nameRegEx)) {
-//     document.querySelector('#errorFirstName').innerHTML = ``;
-//     firstName.style.border = 'solid 1px black';
-//     firstNameIsOk = true;
-//   } else {
-//     document.querySelector('#errorFirstName').innerHTML = `Vänligen fyll i ett giltigt förnamn.`;
-//     firstName.style.border = 'solid 1px red';
-//     firstNameIsOk = false;
-//   }
-//   activateSubmitButton();
-// }
+// phone number
+function checkPhoneNumber() {
+  if (phoneNumber.value.match(phoneNumberRegEx)) {
+    document.querySelector('#errorPhoneNumber').innerHTML = ``;
+    phoneNumber.style.border = 'solid 1px black';
+    phoneNumberIsOk = true;
+  } else {
+    document.querySelector('#errorPhoneNumber').innerHTML = `Vänligen fyll i ett giltigt mobiltelefonnummer. (10 siffror)`;
+    phoneNumber.style.border = 'solid 1px red';
+    phoneNumberIsOk = false;
+  }
+  activateSubmitButton();
+}
 
-// // last name
-// function checkLastName() {
-//   if (lastName.value.match(nameRegEx)) {
-//     document.querySelector('#errorLastName').innerHTML = ``;
-//     lastName.style.border = 'solid 1px black';
-//     lastNameIsOk = true;
-//   } else {
-//     document.querySelector('#errorLastName').innerHTML = `Vänligen fyll i ett giltigt efternamn.`;
-//     lastName.style.border = 'solid 1px red';
-//     lastNameIsOk = false;
-//   }
-//   activateSubmitButton();
-// }
-
-// // address
-// function checkAddress() {
-//   if (address.value.match(addressRegEx)) {
-//     document.querySelector('#errorAddress').innerHTML = ``;
-//     address.style.border = 'solid 1px black';
-//     addressIsOk = true;
-//   } else {
-//     document.querySelector('#errorAddress').innerHTML = `Vänligen fyll i en giltig adress.`;
-//     address.style.border = 'solid 1px red';
-//     addressIsOk = false;
-//   }
-//   activateSubmitButton();
-// }
-
-// // postal code
-// function checkPostalCode() {
-//   const postalCodeRegEx = 
-//   if (postalCode.value.match(postalCodeRegEx) && postalCode.value.length == 5) {
-//     document.querySelector('#errorPostalCode').innerHTML = ``;
-//     postalCode.style.border = 'solid 1px black';
-//     postalCodeIsOk = true;
-//   } else {
-//     document.querySelector('#errorPostalCode').innerHTML = `Vänligen fyll i ett giltigt postnummer (5 siffror).`;
-//     postalCode.style.border = 'solid 1px red';
-//     postalCodeIsOk = false;
-//   }
-//   activateSubmitButton();
-// }
-
-// // locality
-// function checkLocality() {
-//   const lettersSpace = 
-//   if (locality.value.match(lettersSpace)) {
-//     document.querySelector('#errorLocality').innerHTML = ``;
-//     locality.style.border = 'solid 1px black';
-//     localityIsOk = true;
-//   } else {
-//     document.querySelector('#errorLocality').innerHTML = `Vänligen fyll i en giltig ort. (Endast bokstäver)`;
-//     locality.style.border = 'solid 1px red';
-//     localityIsOk = false;
-//   }
-//   activateSubmitButton();
-// }
-
-// // phone number
-// function checkPhoneNumber() {
-//   const phoneRegEx = 
-//   if (phoneNumber.value.match(phoneRegEx)) {
-//     document.querySelector('#errorPhoneNumber').innerHTML = ``;
-//     phoneNumber.style.border = 'solid 1px black';
-//     phoneNumberIsOk = true;
-//   } else {
-//     document.querySelector('#errorPhoneNumber').innerHTML = `Vänligen fyll i ett giltigt mobiltelefonnummer. (10 siffror)`;
-//     phoneNumber.style.border = 'solid 1px red';
-//     phoneNumberIsOk = false;
-//   }
-//   activateSubmitButton();
-// }
-
-// // email
-// function checkEmail() {
-//   const emailRegEx = 
-//   if (email.value.match(emailRegEx)) {
-//     document.querySelector('#errorEmail').innerHTML = ``;
-//     email.style.border = 'solid 1px black';
-//     emailIsOk = true;
-//   } else {
-//     document.querySelector('#errorEmail').innerHTML = `Vänligen fyll i en giltig e-postadress.`;
-//     email.style.border = 'solid 1px red';
-//     emailIsOk = false;
-//   }
-//   activateSubmitButton();
-// }
+// email
+function checkEmail() {
+  if (email.value.match(emailRegEx)) {
+    document.querySelector('#errorEmail').innerHTML = ``;
+    email.style.border = 'solid 1px black';
+    emailIsOk = true;
+  } else {
+    document.querySelector('#errorEmail').innerHTML = `Vänligen fyll i en giltig e-postadress.`;
+    email.style.border = 'solid 1px red';
+    emailIsOk = false;
+  }
+  activateSubmitButton();
+}
 
 // render payment window
 function renderPaymentWindow() {
@@ -655,7 +651,6 @@ function renderPaymentWindow() {
 
     // check social security number
     function checkSocSecNum() {
-      const socSecRegEx = /^(\d{10}|\d{12}|\d{6}-\d{4}|\d{8}-\d{4}|\d{8} \d{4}|\d{6} \d{4})/g;
       if (socialSecNum.value.match(socSecRegEx)) {
         document.querySelector('#errorSocSecNum').innerHTML = ``;
         socialSecNum.style.border = 'solid 1px black';
@@ -675,6 +670,7 @@ function renderPaymentWindow() {
 
 // render confirmation window
 function renderConfirmationWindow() {
+  orderButton.setAttribute('disabled', '');
   confirmationWindow.style.display = 'block';
 
   let orderedDonuts = [];
@@ -685,32 +681,64 @@ function renderConfirmationWindow() {
     }
   }
 
-  confirmationWindow.innerHTML = 
-  `
-    <button id="closeWindow" aria-label="Stäng fönstret"><i class='fa fa-close'></i></button>
-    <h2>Din beställning</h2>
-    <ul>
-  `;
+  // create elements
+  const buttonEl = document.createElement('button');
+  buttonEl.setAttribute('id', 'closeWindow');
+  buttonEl.setAttribute('aria-label', 'Stäng fönstret');
+  buttonEl.innerHTML = '<i class="fa fa-close"></i>';
 
+  const h2El = document.createElement('h2');
+  h2El.innerHTML = 'Din beställning';
+
+  const ulEl = document.createElement('ul');
+
+  // append elements
+  confirmationWindow.appendChild(buttonEl);
+  confirmationWindow.appendChild(h2El);
+  confirmationWindow.appendChild(ulEl);
+
+  let shippingTime = 1;
+
+  // create and append list of ordered donuts
   for (let i = 0; i < orderedDonuts.length; i++) {
-    if (orderedDonuts[i].amount === 1) {
-      confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}-munk.</li>`;
+    const liEl = document.createElement('li');
+    if (orderedDonuts[i].amount == 1) {
+      liEl.innerHTML = `${orderedDonuts[i].amount}st ${orderedDonuts[i].name}-munk.`;
     } else if (orderedDonuts[i].amount > 1) {
-      confirmationWindow.innerHTML += `<li>${orderedDonuts[i].amount}st ${orderedDonuts[i].name}-munkar.</li>`;
+      liEl.innerHTML = `${orderedDonuts[i].amount}st ${orderedDonuts[i].name}-munkar.`;
     }
+    ulEl.appendChild(liEl);
   }
 
-  confirmationWindow.innerHTML += 
-  `
-    </ul>
+  // shipping time
+  const spanEl = document.createElement('span');
 
-    Uppskattad leveranstid: 2 dagar.
-  `;
+  // if more than 10 donuts of one kind is ordered, shipping time is 2 days
+  orderedDonuts.forEach((donut) => {
+    if (donut.amount < 10) {
+      shippingTime = 2;
+    }
+  });
 
+  console.log(shippingTime)
+
+  // grammar
+  if (Math.floor(shippingTime) == 1) {
+    spanEl.innerHTML = `Uppskattad leveranstid: ${Math.floor(shippingTime)} dag.`;
+  } else if (Math.floor(shippingTime) > 1) {
+    spanEl.innerHTML = `Uppskattad leveranstid: ${Math.floor(shippingTime)} dagar.`;
+  }
+
+  confirmationWindow.appendChild(spanEl);
+
+  // function for close window button
   function closeConfirmationWindow() {
     confirmationWindow.style.display = 'none';
+    confirmationWindow.innerHTML = '';
+    orderButton.removeAttribute('disabled');
   }
 
+  // event listener for close window button
   document.querySelector('#closeWindow').addEventListener('click', closeConfirmationWindow);
 }
 
@@ -724,19 +752,18 @@ function clearOrder() {
     showDonuts();
 }
 
-
 // **************************************************************************************************************
 // ---------------------------------------------- PROGRAM LOGIC -------------------------------------------------
 // **************************************************************************************************************
 
 // form validation
-
-// lastName.addEventListener('change', checkLastName);
-// address.addEventListener('change', checkAddress);
-// postalCode.addEventListener('change', checkPostalCode);
-// locality.addEventListener('change', checkLocality);
-// phoneNumber.addEventListener('change', checkPhoneNumber);
-// email.addEventListener('change', checkEmail);
+firstName.addEventListener('change', checkFirstName);
+lastName.addEventListener('change', checkLastName);
+address.addEventListener('change', checkAddress);
+postalCode.addEventListener('change', checkPostalCode);
+locality.addEventListener('change', checkLocality);
+phoneNumber.addEventListener('change', checkPhoneNumber);
+email.addEventListener('change', checkEmail);
 
 // toggle cart
 toggleCartBtn.addEventListener('click', toggleCart);
